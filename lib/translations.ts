@@ -1,0 +1,166 @@
+export const translations = {
+  en: {
+    // Navigation
+    home: "Home",
+    about: "About",
+    skills: "Skills",
+    projects: "Projects",
+    contact: "Contact",
+    
+    // Hero
+    heroTitle: "Hi there",
+    heroDesc1: "I'm a Fullstack Software Engineer building fast, scalable web applications with Next.js, React, Node.js, and modern web technologies.",
+    heroDesc2: "I love solving real problems, writing clean code, and collaborating in fast-moving startup environments.",
+    viewProjects: "[ View Projects ]",
+    getInTouch: "[ Get in Touch ]",
+    downloadCV: "[ Download CV ]",
+    playGame: "[ Play Snake Game ]",
+    
+    // Snake Game
+    snakeGameTitle: "Collect My Skills!",
+    snakeScore: "Skills Collected",
+    snakeGameOver: "Game Over!",
+    snakeWin: "All Skills Collected!",
+    snakeRestart: "[ Restart ]",
+    snakeClose: "[ Close ]",
+    snakeInstructions: "Use Arrow Keys or WASD to move",
+    
+    // About
+    experience: "Experience",
+    education: "Education",
+    fullstackEngineer: "Fullstack Engineer",
+    experienceCompany: "FutureCorp • Paris | Nov 2023 - Mar 2025",
+    exp1: "▸ Developed fast, SEO-optimized websites with Next.js & Sanity CMS",
+    exp2: "▸ Managed high-profile clients: Saatchi & Saatchi, The Brooklyn Tower",
+    exp3: "▸ Achieved 99.9% uptime, reduced issues by 25%",
+    exp4: "▸ Collaborated on responsive UI & content workflows",
+    embeddedEngineer: "Embedded Linux Engineering Intern",
+    embeddedCompany: "Occitaline • Toulouse, France | Apr 2019 - Aug 2019",
+    expEmb1: "▸ Designed LoRaWAN IoT gateways for smart buildings, monitoring 100+ sensors in real-time",
+    expEmb2: "▸ Built embedded Linux solutions with MQTT protocols for secure device connectivity",
+    expEmb3: "▸ Reduced deployment time by 20% through hardware integration troubleshooting",
+    expEmb4: "▸ Created technical documentation for gateway deployment and maintenance",
+    edu1337: "UM6P - 1337 Coding School (42 Network)",
+    edu1337Date: "Nov 2021 - Present",
+    edu1337Degree: "Software Engineering, Level 19.16",
+    edu1337Desc: "Advanced curriculum student with completed Common Core in C/C++, algorithms, Unix systems and software engineering fundamentals",
+    eduEnsa: "National School of Applied Sciences (ENSA Kenitra)",
+    eduEnsaDate: "Sep 2014 - Aug 2018",
+    eduEnsaDegree: "Engineering School",
+    eduEnsaDesc: "Studied networking and telecommunication, completed technical internships in industry",
+    languages: "Languages: English (Professional), French (Fluent), Arabic (Native)",
+    
+    // Skills
+    frontend: "Frontend",
+    backend: "Backend",
+    languagesSkills: "Languages",
+    devops: "DevOps",
+    
+    // Projects
+    projectsTitle: "Projects",
+    seeMoreProjects: "[ See More Projects",
+    showLess: "[ Show Less ]",
+    more: "more) ]",
+    
+    // Contact
+    email: "EMAIL",
+    phone: "PHONE",
+    social: "SOCIAL",
+    sendMessage: "Send Me a Message",
+    yourName: "Your Name",
+    yourEmail: "Your Email",
+    yourMessage: "Your Message",
+    sendButton: "[ Send Message ]",
+    sending: "[ Sending... ]",
+    messageSent: "Message sent successfully!",
+    messageError: "Failed to send message. Please try email instead.",
+    copyright: "© 2025 Beaj Ousama • All rights reserved",
+    emailme: "Email",
+    
+    // Role
+    role: "Fullstack Dev",
+  },
+  fr: {
+    // Navigation
+    home: "Accueil",
+    about: "À Propos",
+    skills: "Compétences",
+    projects: "Projets",
+    contact: "Contact",
+    
+    // Hero
+    heroTitle: "Bonjour",
+    heroDesc1: "Je suis ingénieur Fullstack créant des applications web rapides et évolutives avec Next.js, React, Node.js et les technologies web modernes.",
+    heroDesc2: "J'adore résoudre de vrais problèmes, écrire du code propre et collaborer dans des environnements de startup dynamiques.",
+    viewProjects: "[ Voir Projets ]",
+    getInTouch: "[ Me Contacter ]",
+    downloadCV: "[ Télécharger CV ]",
+    playGame: "[ Jouer au Snake ]",
+    
+    // Snake Game
+    snakeGameTitle: "Collecte Mes Compétences!",
+    snakeScore: "Compétences Collectées",
+    snakeGameOver: "Game Over!",
+    snakeWin: "Toutes Les Compétences Collectées!",
+    snakeRestart: "[ Recommencer ]",
+    snakeClose: "[ Fermer ]",
+    snakeInstructions: "Utilisez les flèches ou WASD pour bouger",
+    
+    // About
+    experience: "Expérience",
+    education: "Formation",
+    fullstackEngineer: "Ingénieur Fullstack",
+    experienceCompany: "FutureCorp • Paris | Nov 2023 - Mar 2025",
+    exp1: "▸ Développement de sites web rapides et optimisés SEO avec Next.js & Sanity CMS",
+    exp2: "▸ Gestion de clients prestigieux : Saatchi & Saatchi, The Brooklyn Tower",
+    exp3: "▸ Atteint 99,9% de disponibilité, réduction des problèmes de 25%",
+    exp4: "▸ Collaboration sur l'UI responsive et les workflows de contenu",
+    embeddedEngineer: "Stagiaire Ingénieur Linux Embarqué",
+    embeddedCompany: "Occitaline • Toulouse, France | Avr 2019 - Aoû 2019",
+    expEmb1: "▸ Conception de passerelles IoT LoRaWAN pour bâtiments intelligents, surveillance de 100+ capteurs en temps réel",
+    expEmb2: "▸ Développement de solutions Linux embarquées avec protocoles MQTT pour connectivité sécurisée",
+    expEmb3: "▸ Réduction de 20% du temps de déploiement via débogage d'intégration matérielle",
+    expEmb4: "▸ Création de documentation technique pour déploiement et maintenance des passerelles",
+    edu1337: "UM6P - 1337 Coding School (réseau 42)",
+    edu1337Date: "Nov 2021 - Présent",
+    edu1337Degree: "Génie Logiciel, Niveau 19.16",
+    edu1337Desc: "Étudiant avancé avec Common Core complété en C/C++, algorithmes, systèmes Unix et fondamentaux du génie logiciel",
+    eduEnsa: "École Nationale des Sciences Appliquées (ENSA Kénitra)",
+    eduEnsaDate: "Sep 2014 - Aoû 2018",
+    eduEnsaDegree: "École d'Ingénieurs",
+    eduEnsaDesc: "Études en réseaux et télécommunications, stages techniques complétés en industrie",
+    languages: "Langues : Anglais (Professionnel), Français (Courant), Arabe (Natif)",
+    
+    // Skills
+    frontend: "Frontend",
+    backend: "Backend",
+    languagesSkills: "Langages",
+    devops: "DevOps",
+    
+    // Projects
+    projectsTitle: "Projets",
+    seeMoreProjects: "[ Voir Plus de Projets",
+    showLess: "[ Voir Moins ]",
+    more: "de plus) ]",
+    
+    // Contact
+    email: "EMAIL",
+    phone: "TÉLÉPHONE",
+    social: "RÉSEAUX",
+    sendMessage: "Envoyez-moi un Message",
+    yourName: "Votre Nom",
+    yourEmail: "Votre Email",
+    yourMessage: "Votre Message",
+    sendButton: "[ Envoyer Message ]",
+    sending: "[ Envoi... ]",
+    messageSent: "Message envoyé avec succès!",
+    messageError: "Échec de l'envoi. Veuillez utiliser l'email à la place.",
+    copyright: "© 2025 Beaj Ousama • Tous droits réservés",
+    emailme: "Email",
+    
+    // Role
+    role: "Dév Fullstack",
+  },
+}
+
+export type Language = keyof typeof translations

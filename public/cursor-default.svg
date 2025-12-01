@@ -1,0 +1,8 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer square -->
+  <rect x="8" y="8" width="16" height="16" fill="#3a3a3a" stroke="#c9b896" stroke-width="2"/>
+  <!-- Inner accent square -->
+  <rect x="12" y="12" width="8" height="8" fill="#6b5b42"/>
+  <!-- Center dot -->
+  <rect x="14" y="14" width="4" height="4" fill="#d4c5a0"/>
+</svg>

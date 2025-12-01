@@ -1,11 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
+
+
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   /* Game-style retro color palette for the portfolio */
-  --background: #d4c5a0;
+  --background: #c9b896;
   --foreground: #3a3a3a;
   --card: #c9b896;
   --card-foreground: #3a3a3a;
@@ -42,38 +45,15 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: #2b2520;
+  --foreground: #e8d5c4;
+  --card: #3a332b;
+  --card-foreground: #e8d5c4;
+  --accent: #8b7355;
+  --accent-foreground: #e8d5c4;
+  --border: #8b7355;
+  --muted: #4a3f35;
+  --muted-foreground: #c4b5a8;
 }
 
 @theme inline {
@@ -120,12 +100,13 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
 
 * {
   border-color: var(--border);
@@ -135,10 +116,31 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: "Courier New", monospace;
+  cursor: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Hide default cursor */
+* {
+  cursor: none !important;
+}
+
+/* Custom cursor for interactive elements */
+a, button, .retro-button, .sidebar-icon, .social-icon, [role="button"], input[type="submit"] {
+  position: relative;
 }
 
 html {
   scroll-behavior: smooth;
+  min-height: 100vh;
+  scroll-snap-type: y mandatory;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Game-style title font */
@@ -176,8 +178,8 @@ html {
 }
 
 .retro-button:hover {
-  transform: translate(2px, 2px);
-  box-shadow: -2px -2px 0px rgba(0, 0, 0, 0.2);
+  transform: translate(1px, 1px);
+  box-shadow: -1px -1px 0px rgba(0, 0, 0, 0.15);
 }
 
 .retro-button:active {
@@ -199,8 +201,8 @@ html {
 }
 
 .sidebar-icon:hover {
-  background-color: var(--foreground);
-  color: var(--background);
+  background-color: var(--muted);
+  color: var(--foreground);
   box-shadow: -2px -2px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -223,8 +225,8 @@ html {
 }
 
 .social-icon:hover {
-  background-color: var(--foreground);
-  color: var(--background);
+  background-color: var(--muted);
+  color: var(--foreground);
   box-shadow: -3px -3px 0px rgba(0, 0, 0, 0.15);
 }
 

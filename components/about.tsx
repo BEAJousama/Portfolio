@@ -1,43 +1,92 @@
+"use client"
+
+import { useLanguage } from "@/contexts/LanguageContext"
+
 export default function About() {
+  const { t } = useLanguage()
+  
   return (
-    <section id="experience" className="md:ml-64 min-h-screen flex items-center">
-      <div className="w-full max-w-3xl" style={{ padding: "1.5rem" }}>
+    <section id="about" className="md:ml-64 min-h-screen flex items-center">
+      <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
+        <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>
+          {t.about}
+        </h2>
+        <div className="dashed-divider" style={{ marginBottom: "3rem" }}></div>
+
         {/* About section with experience */}
         <div className="pixel-border bg-card" style={{ padding: "1.5rem", marginBottom: "2rem" }}>
           <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "1.5rem" }}>
-            Experience
+            {t.experience}
           </h2>
-          <div style={{ gap: "1rem", display: "flex", flexDirection: "column" }}>
-            <div>
-              <p className="pixel-text font-bold text-foreground">Fullstack Engineer</p>
-              <p className="pixel-text text-xs text-muted-foreground">FutureCorp • Paris | Nov 2023 - Mar 2025</p>
+          <div style={{ gap: "2rem", display: "flex", flexDirection: "column" }}>
+            {/* FutureCorp Experience */}
+            <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
+              <div>
+                <p className="pixel-text font-bold text-foreground">{t.fullstackEngineer}</p>
+                <p className="pixel-text text-xs text-muted-foreground">{t.experienceCompany}</p>
+              </div>
+              <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
+                <div style={{ gap: "0.5rem", display: "flex", flexDirection: "column" }}>
+                  <p className="pixel-text text-sm">{t.exp1}</p>
+                  <p className="pixel-text text-sm">{t.exp2}</p>
+                  <p className="pixel-text text-sm">{t.exp3}</p>
+                  <p className="pixel-text text-sm">{t.exp4}</p>
+                </div>
+              </div>
             </div>
-            <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
-              <div style={{ gap: "0.5rem", display: "flex", flexDirection: "column" }}>
-                <p className="pixel-text text-sm">▸ Developed fast, SEO-optimized websites with Next.js & Sanity CMS</p>
-                <p className="pixel-text text-sm">
-                  ▸ Managed high-profile clients: Saatchi & Saatchi, The Brooklyn Tower
-                </p>
-                <p className="pixel-text text-sm">▸ Achieved 99.9% uptime, reduced issues by 25%</p>
-                <p className="pixel-text text-sm">▸ Collaborated on responsive UI & content workflows</p>
+            
+            {/* Occitaline Experience */}
+            <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
+              <div>
+                <p className="pixel-text font-bold text-foreground">{t.embeddedEngineer}</p>
+                <p className="pixel-text text-xs text-muted-foreground">{t.embeddedCompany}</p>
+              </div>
+              <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
+                <div style={{ gap: "0.5rem", display: "flex", flexDirection: "column" }}>
+                  <p className="pixel-text text-sm">{t.expEmb1}</p>
+                  <p className="pixel-text text-sm">{t.expEmb2}</p>
+                  <p className="pixel-text text-sm">{t.expEmb3}</p>
+                  <p className="pixel-text text-sm">{t.expEmb4}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* About section */}
+        {/* Education section */}
         <div className="pixel-border bg-card" style={{ padding: "1.5rem" }}>
           <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "1.5rem" }}>
-            About
+            {t.education}
           </h2>
-          <div style={{ gap: "1rem", display: "flex", flexDirection: "column" }}>
+          <div style={{ gap: "2rem", display: "flex", flexDirection: "column" }}>
+            {/* 1337 Education */}
+            <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
+              <div>
+                <p className="pixel-text font-bold text-foreground">{t.edu1337}</p>
+                <p className="pixel-text text-xs text-muted-foreground">{t.edu1337Date}</p>
+                <p className="pixel-text text-sm text-accent" style={{ marginTop: "0.25rem" }}>{t.edu1337Degree}</p>
+              </div>
+              <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
+                <p className="pixel-text text-sm leading-relaxed">{t.edu1337Desc}</p>
+              </div>
+            </div>
+            
+            {/* ENSA Education */}
+            <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
+              <div>
+                <p className="pixel-text font-bold text-foreground">{t.eduEnsa}</p>
+                <p className="pixel-text text-xs text-muted-foreground">{t.eduEnsaDate}</p>
+                <p className="pixel-text text-sm text-accent" style={{ marginTop: "0.25rem" }}>{t.eduEnsaDegree}</p>
+              </div>
+              <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
+                <p className="pixel-text text-sm leading-relaxed">{t.eduEnsaDesc}</p>
+              </div>
+            </div>
+            
+            {/* Languages */}
+            <div className="dashed-divider" style={{ margin: "0.5rem 0" }}></div>
             <p className="pixel-text text-sm leading-relaxed">
-              Advanced student at <span className="font-bold">UM6P - 1337 Coding School</span> (42 Network) with strong
-              fundamentals in C/C++, algorithms, Unix systems, and software engineering.
-            </p>
-            <p className="pixel-text text-sm leading-relaxed">
-              Languages: <span className="font-bold">English (Professional)</span>,{" "}
-              <span className="font-bold">French (Fluent)</span>, <span className="font-bold">Arabic (Native)</span>
+              {t.languages}
             </p>
           </div>
         </div>
