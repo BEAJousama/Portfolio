@@ -74,6 +74,10 @@ export const translations = {
     sending: "[ Sending... ]",
     messageSent: "Message sent successfully!",
     messageError: "Failed to send message. Please try email instead.",
+    errorNameRequired: "[!] Name is required",
+    errorEmailRequired: "[!] Email is required",
+    errorEmailInvalid: "[!] Please enter a valid email address",
+    errorMessageRequired: "[!] Message is required",
     copyright: "© 2025 Beaj Ousama • All rights reserved",
     emailme: "Email",
     
@@ -155,6 +159,10 @@ export const translations = {
     sending: "[ Envoi... ]",
     messageSent: "Message envoyé avec succès!",
     messageError: "Échec de l'envoi. Veuillez utiliser l'email à la place.",
+    errorNameRequired: "[!] Le nom est requis",
+    errorEmailRequired: "[!] L'email est requis",
+    errorEmailInvalid: "[!] Veuillez entrer une adresse email valide",
+    errorMessageRequired: "[!] Le message est requis",
     copyright: "© 2025 Beaj Ousama • Tous droits réservés",
     emailme: "Email",
     

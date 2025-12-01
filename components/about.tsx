@@ -23,7 +23,7 @@ export default function About() {
             <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
               <div>
                 <p className="pixel-text font-bold text-foreground">{t.fullstackEngineer}</p>
-                <p className="pixel-text text-xs text-muted-foreground">{t.experienceCompany}</p>
+                <p className="pixel-text text-xs text-foreground">{t.experienceCompany}</p>
               </div>
               <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
                 <div style={{ gap: "0.5rem", display: "flex", flexDirection: "column" }}>
@@ -39,7 +39,7 @@ export default function About() {
             <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
               <div>
                 <p className="pixel-text font-bold text-foreground">{t.embeddedEngineer}</p>
-                <p className="pixel-text text-xs text-muted-foreground">{t.embeddedCompany}</p>
+                <p className="pixel-text text-xs text-foreground">{t.embeddedCompany}</p>
               </div>
               <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
                 <div style={{ gap: "0.5rem", display: "flex", flexDirection: "column" }}>
@@ -63,7 +63,7 @@ export default function About() {
             <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
               <div>
                 <p className="pixel-text font-bold text-foreground">{t.edu1337}</p>
-                <p className="pixel-text text-xs text-muted-foreground">{t.edu1337Date}</p>
+                <p className="pixel-text text-xs text-foreground">{t.edu1337Date}</p>
                 <p className="pixel-text text-sm text-accent" style={{ marginTop: "0.25rem" }}>{t.edu1337Degree}</p>
               </div>
               <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
@@ -75,7 +75,7 @@ export default function About() {
             <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
               <div>
                 <p className="pixel-text font-bold text-foreground">{t.eduEnsa}</p>
-                <p className="pixel-text text-xs text-muted-foreground">{t.eduEnsaDate}</p>
+                <p className="pixel-text text-xs text-foreground">{t.eduEnsaDate}</p>
                 <p className="pixel-text text-sm text-accent" style={{ marginTop: "0.25rem" }}>{t.eduEnsaDegree}</p>
               </div>
               <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>

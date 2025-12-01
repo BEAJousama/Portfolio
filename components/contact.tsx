@@ -9,9 +9,46 @@ export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+  const [errors, setErrors] = useState({ name: "", email: "", message: "" })
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const validateForm = () => {
+    const newErrors = { name: "", email: "", message: "" }
+    let isValid = true
+
+    if (!formData.name.trim()) {
+      newErrors.name = t.errorNameRequired
+      isValid = false
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = t.errorEmailRequired
+      isValid = false
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = t.errorEmailInvalid
+      isValid = false
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = t.errorMessageRequired
+      isValid = false
+    }
+
+    setErrors(newErrors)
+    return isValid
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+
     setIsSubmitting(true)
     setSubmitStatus("idle")
 
@@ -25,6 +62,7 @@ export default function Contact() {
       if (response.ok) {
         setSubmitStatus("success")
         setFormData({ name: "", email: "", message: "" })
+        setErrors({ name: "", email: "", message: "" })
       } else {
         setSubmitStatus("error")
       }
@@ -36,7 +74,12 @@ export default function Contact() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors({ ...errors, [name]: "" })
+    }
   }
   
   return (
@@ -49,7 +92,7 @@ export default function Contact() {
 
         {/* Contact Form */}
         <div className="pixel-border bg-card" style={{ padding: "1.5rem", marginBottom: "2rem" }}>
-          <p className="pixel-text text-xs text-muted-foreground" style={{ marginBottom: "1.5rem" }}>
+          <p className="pixel-text text-xs text-foreground" style={{ marginBottom: "1.5rem" }}>
             &gt; {t.sendMessage}
           </p>
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
@@ -62,10 +105,14 @@ export default function Contact() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
                 className="pixel-border pixel-text text-sm bg-background text-foreground"
                 style={{ width: "100%", padding: "0.75rem", outline: "none" }}
               />
+              {errors.name && (
+                <p className="pixel-text text-xs text-foreground" style={{ marginTop: "0.5rem" }}>
+                  {errors.name}
+                </p>
+              )}
             </div>
             <div>
               <label className="pixel-text text-xs font-bold" style={{ display: "block", marginBottom: "0.5rem" }}>
@@ -76,10 +123,14 @@ export default function Contact() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
                 className="pixel-border pixel-text text-sm bg-background text-foreground"
                 style={{ width: "100%", padding: "0.75rem", outline: "none" }}
               />
+              {errors.email && (
+                <p className="pixel-text text-xs text-foreground" style={{ marginTop: "0.5rem" }}>
+                  {errors.email}
+                </p>
+              )}
             </div>
             <div>
               <label className="pixel-text text-xs font-bold" style={{ display: "block", marginBottom: "0.5rem" }}>
@@ -89,11 +140,15 @@ export default function Contact() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                required
                 rows={6}
                 className="pixel-border pixel-text text-sm bg-background text-foreground"
                 style={{ width: "100%", padding: "0.75rem", outline: "none", resize: "vertical" }}
               />
+              {errors.message && (
+                <p className="pixel-text text-xs text-foreground" style={{ marginTop: "0.5rem" }}>
+                  {errors.message}
+                </p>
+              )}
             </div>
             <button
               type="submit"
@@ -117,40 +172,40 @@ export default function Contact() {
 
         {/* Contact section with game-style boxes */}
         <div className="pixel-border bg-card" style={{ padding: "1.5rem" }}>
-          <div className="flex justify-center space-x-6">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-6">
             <a
               href="mailto:beajousama@gmail.com"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"
-              style={{ padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{ padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)", display: "flex", alignItems: "center", gap: "0.5rem" }}
             >
               <Mail size={16} />
-              {t.emailme}
+              <span className="hidden sm:inline">{t.emailme}</span>
             </a>
             <a
               href="https://github.com/ousamabeaj"
               target="_blank"
               rel="noopener noreferrer"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"
-              style={{ padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{ padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)", display: "flex", alignItems: "center", gap: "0.5rem" }}
             >
               <Github size={16} />
-              GitHub
+              <span className="hidden sm:inline">GitHub</span>
             </a>
             <a
               href="https://www.linkedin.com/in/ousama-beaj/"
               target="_blank"
               rel="noopener noreferrer"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"
-              style={{ padding: "0.5rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{ padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)", display: "flex", alignItems: "center", gap: "0.5rem" }}
             >
               <Linkedin size={16} />
-              LinkedIn
+              <span className="hidden sm:inline">LinkedIn</span>
             </a>
           </div>
 
           <div className="dashed-divider" style={{ margin: "2rem 0" }}></div>
 
-          <p className="pixel-text text-xs text-center text-muted-foreground">
+          <p className="pixel-text text-xs text-center text-foreground">
             {t.copyright}
           </p>
         </div>

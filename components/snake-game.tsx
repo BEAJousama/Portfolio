@@ -179,7 +179,7 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
         </div>
 
         {/* Instructions */}
-        <p className="pixel-text text-xs mb-4 text-center opacity-75">
+        <p className="pixel-text text-xs mb-4 text-center">
           {t.snakeInstructions}
         </p>
 
@@ -250,10 +250,10 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
 
         {/* Collected Skills */}
         <div className="pixel-border bg-card p-3">
-          <h4 className="pixel-text text-xs font-bold mb-2 opacity-75">Collected:</h4>
+          <h4 className="pixel-text text-xs font-bold mb-2">Collected:</h4>
           <div className="flex flex-wrap gap-1">
             {collectedSkills.length === 0 ? (
-              <span className="pixel-text text-xs opacity-50">No skills collected yet...</span>
+              <span className="pixel-text text-xs">No skills collected yet...</span>
             ) : (
               collectedSkills.map((skill, i) => (
                 <span

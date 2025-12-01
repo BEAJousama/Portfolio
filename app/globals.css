@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -9,14 +10,14 @@
 :root {
   /* Game-style retro color palette for the portfolio */
   --background: #c9b896;
-  --foreground: #3a3a3a;
+  --foreground: #000000;
   --card: #c9b896;
-  --card-foreground: #3a3a3a;
+  --card-foreground: #000000;
   --accent: #6b5b42;
   --accent-foreground: #d4c5a0;
-  --border: #3a3a3a;
+  --border: #000000;
   --muted: #a8986b;
-  --muted-foreground: #3a3a3a;
+  --muted-foreground: #000000;
   --radius: 0.625rem;
 
   --popover: oklch(1 0 0);
@@ -46,14 +47,14 @@
 
 .dark {
   --background: #2b2520;
-  --foreground: #e8d5c4;
+  --foreground: #f5f5f5;
   --card: #3a332b;
-  --card-foreground: #e8d5c4;
+  --card-foreground: #f5f5f5;
   --accent: #8b7355;
   --accent-foreground: #e8d5c4;
   --border: #8b7355;
   --muted: #4a3f35;
-  --muted-foreground: #c4b5a8;
+  --muted-foreground: #e0e0e0;
 }
 
 @theme inline {
@@ -115,7 +116,8 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: "Courier New", monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-weight: 300;
   cursor: none;
   min-height: 100vh;
   margin: 0;
@@ -141,6 +143,13 @@ html {
 section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  section {
+    padding: 0;
+  }
 }
 
 /* Game-style title font */
@@ -161,7 +170,7 @@ section {
 
 /* Pixelated text */
 .pixel-text {
-  font-family: "Courier New", monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
   letter-spacing: 0.05em;
 }
 
@@ -174,7 +183,7 @@ section {
   cursor: pointer;
   font-weight: bold;
   transition: all 0.1s;
-  font-family: "Courier New", monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
 }
 
 .retro-button:hover {

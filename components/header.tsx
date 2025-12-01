@@ -119,59 +119,77 @@ export default function Header() {
 
         {/* Navigation */}
         <nav
-          className={`md:block border-t-4 md:border-t-0 border-foreground md:space-y-6 space-y-4 md:opacity-100 transition-all duration-300 ease-in-out overflow-hidden ${
-            mobileMenuOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0 md:max-h-none"
+          className={`md:block fixed md:relative left-0 right-0 md:inset-auto bg-background md:bg-transparent z-40 md:z-auto border-t-4 md:border-t-0 border-foreground transition-all duration-500 ease-in-out ${
+            mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto"
           }`}
-          style={{ padding: mobileMenuOpen ? "1rem" : "0 1rem" }}
+          style={{ 
+            padding: "1rem",
+            top: mobileMenuOpen ? "80px" : "-100%",
+            bottom: mobileMenuOpen ? "0" : "auto",
+            ...(mobileMenuOpen ? {} : { top: "auto" })
+          }}
         >
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleScroll(item.id)}
-              className={`block w-full text-left pixel-text text-sm font-bold transition-all ${
-                activeSection === item.id 
-                  ? "bg-accent text-accent-foreground pixel-border" 
-                  : "text-foreground hover:text-accent hover:bg-muted"
-              }`}
-              style={{ padding: "0.5rem 1rem" }}
-            >
-              &gt; {item.label}
-            </button>
-          ))}
-          
-          {/* Language Switcher - Mobile */}
-          <div className="md:hidden pt-4 border-t-2 border-dashed border-foreground">
-            <div className="flex gap-2 mb-4">
+          <div className="flex flex-col h-full md:h-auto justify-center md:justify-start space-y-6">
+            {navItems.map((item, index) => (
               <button
-                onClick={() => setLanguage("en")}
-                className={`pixel-border pixel-text text-xs font-bold flex-1 transition-colors ${
-                  language === "en" 
-                    ? "bg-accent text-accent-foreground" 
-                    : "bg-card text-foreground hover:bg-muted"
+                key={item.id}
+                onClick={() => handleScroll(item.id)}
+                style={{ 
+                  padding: "1rem 1.5rem",
+                  transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
+                  opacity: mobileMenuOpen ? 1 : 0,
+                  transition: `all 0.4s ease-in-out ${index * 0.1}s`,
+                }}
+                className={`block w-full text-left pixel-text text-lg md:text-sm font-bold md:!transform-none md:!opacity-100 transition-all ${
+                  activeSection === item.id 
+                    ? "bg-accent text-accent-foreground pixel-border" 
+                    : "text-foreground hover:text-accent hover:bg-muted"
                 }`}
-                style={{ padding: "0.5rem" }}
               >
-                EN
+                &gt; {item.label}
               </button>
+            ))}
+          
+            {/* Language Switcher - Mobile */}
+            <div className="md:hidden pt-4 border-t-2 border-dashed border-foreground"
+              style={{ 
+                transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
+                opacity: mobileMenuOpen ? 1 : 0,
+                transition: `all 0.4s ease-in-out ${navItems.length * 0.1}s`,
+              }}
+            >
+              <div className="flex gap-2 mb-4">
+                <button
+                  onClick={() => setLanguage("en")}
+                  className={`pixel-border pixel-text text-sm font-bold flex-1 transition-colors ${
+                    language === "en" 
+                      ? "bg-accent text-accent-foreground" 
+                      : "bg-card text-foreground hover:bg-muted"
+                  }`}
+                  style={{ padding: "0.75rem" }}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLanguage("fr")}
+                  className={`pixel-border pixel-text text-sm font-bold flex-1 transition-colors ${
+                    language === "fr" 
+                      ? "bg-accent text-accent-foreground" 
+                      : "bg-card text-foreground hover:bg-muted"
+                  }`}
+                  style={{ padding: "0.75rem" }}
+                >
+                  FR
+                </button>
+              </div>
               <button
-                onClick={() => setLanguage("fr")}
-                className={`pixel-border pixel-text text-xs font-bold flex-1 transition-colors ${
-                  language === "fr" 
-                    ? "bg-accent text-accent-foreground" 
-                    : "bg-card text-foreground hover:bg-muted"
-                }`}
-                style={{ padding: "0.5rem" }}
+                onClick={toggleTheme}
+                className="w-full pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors"
+                style={{ padding: "0.75rem" }}
               >
-                FR
+                {theme === "light" ? "🌙 DARK MODE" : "☀️ LIGHT MODE"}
               </button>
             </div>
-            <button
-              onClick={toggleTheme}
-              className="w-full pixel-border pixel-text text-xs font-bold bg-card text-foreground hover:bg-muted transition-colors"
-              style={{ padding: "0.5rem" }}
-            >
-              {theme === "light" ? "🌙 DARK MODE" : "☀️ LIGHT MODE"}
-            </button>
           </div>
         </nav>
 

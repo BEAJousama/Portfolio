@@ -157,7 +157,7 @@ export default function Projects() {
               >
                 <div>
                   <h3 className="pixel-text font-bold text-lg">{project.title}</h3>
-                  <p className="pixel-text text-xs opacity-75" style={{ marginTop: "0.25rem" }}>
+                  <p className="pixel-text text-xs" style={{ marginTop: "0.25rem" }}>
                     {project.year}
                   </p>
                 </div>
