@@ -1,5 +1,6 @@
 "use client"
 
+import { is } from "date-fns/locale"
 import { useEffect, useState } from "react"
 
 export default function CustomCursor() {
@@ -40,6 +41,8 @@ export default function CustomCursor() {
     }
 
     window.addEventListener("mousemove", updateCursor)
+
+    
     return () => {
       window.removeEventListener("mousemove", updateCursor)
       window.removeEventListener('resize', checkMobile)

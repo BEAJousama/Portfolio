@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 
 const GRID_SIZE = 20
 const CELL_SIZE = 20
@@ -18,6 +19,29 @@ const ALL_SKILLS = [
   "Docker", "Kubernetes", "Git", "Nginx", "Azure"
 ]
 
+const getSkillIconUrl = (skill: string): string => {
+  const iconMap: Record<string, string> = {
+    "React": "https://icon.icepanel.io/Technology/svg/React.svg",
+    "Next.js": "https://icon.icepanel.io/Technology/svg/Next.js.svg",
+    "TypeScript": "https://icon.icepanel.io/Technology/svg/TypeScript.svg",
+    "CSS": "https://icon.icepanel.io/Technology/svg/CSS3.svg",
+    "TailwindCSS": "https://icon.icepanel.io/Technology/svg/Tailwind-CSS.svg",
+    "Node.js": "https://icon.icepanel.io/Technology/svg/Node.js.svg",
+    "Express.js": "https://icon.icepanel.io/Technology/svg/Express.svg",
+    "NestJS": "https://icon.icepanel.io/Technology/svg/Nest.js.svg",
+    "PostgreSQL": "https://icon.icepanel.io/Technology/svg/PostgresSQL.svg",
+    "JavaScript": "https://icon.icepanel.io/Technology/svg/JavaScript.svg",
+    "C": "https://icon.icepanel.io/Technology/svg/C.svg",
+    "C++": "https://icon.icepanel.io/Technology/svg/C%2B%2B-%28CPlusPlus%29.svg",
+    "Docker": "https://icon.icepanel.io/Technology/svg/Docker.svg",
+    "Kubernetes": "https://icon.icepanel.io/Technology/svg/Kubernetes.svg",
+    "Git": "https://icon.icepanel.io/Technology/svg/Git.svg",
+    "Nginx": "https://icon.icepanel.io/Technology/svg/NGINX.svg",
+    "Azure": "https://icon.icepanel.io/Technology/svg/Azure.svg"
+  }
+  return iconMap[skill] || "https://icon.icepanel.io/Technology/svg/React.svg"
+}
+
 export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { t } = useLanguage()
   const [snake, setSnake] = useState<Position[]>(INITIAL_SNAKE)
@@ -29,6 +53,17 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
   const [isPlaying, setIsPlaying] = useState(false)
   const [speed, setSpeed] = useState(150)
   const gameLoopRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleDirectionChange = useCallback((newDirection: Direction) => {
+    if (!isPlaying) return
+    
+    // Prevent reversing direction
+    if (newDirection.x !== 0 && direction.x === 0) {
+      setDirection(newDirection)
+    } else if (newDirection.y !== 0 && direction.y === 0) {
+      setDirection(newDirection)
+    }
+  }, [direction, isPlaying])
 
   const getRandomPosition = useCallback((excludeSkills: string[] = []): Position & { skill: string } => {
     const availableSkills = ALL_SKILLS.filter(s => !excludeSkills.includes(s))
@@ -124,19 +159,19 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
       switch (key) {
         case "arrowup":
         case "w":
-          if (direction.y === 0) setDirection({ x: 0, y: -1 })
+          handleDirectionChange({ x: 0, y: -1 })
           break
         case "arrowdown":
         case "s":
-          if (direction.y === 0) setDirection({ x: 0, y: 1 })
+          handleDirectionChange({ x: 0, y: 1 })
           break
         case "arrowleft":
         case "a":
-          if (direction.x === 0) setDirection({ x: -1, y: 0 })
+          handleDirectionChange({ x: -1, y: 0 })
           break
         case "arrowright":
         case "d":
-          if (direction.x === 0) setDirection({ x: 1, y: 0 })
+          handleDirectionChange({ x: 1, y: 0 })
           break
         case "escape":
           onClose()
@@ -148,7 +183,7 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
       window.addEventListener("keydown", handleKeyPress, { capture: true })
       return () => window.removeEventListener("keydown", handleKeyPress, { capture: true })
     }
-  }, [direction, isOpen, isPlaying, onClose])
+  }, [isOpen, isPlaying, onClose, handleDirectionChange])
 
   useEffect(() => {
     if (isOpen && !isPlaying && !gameOver && !gameWon) {
@@ -214,17 +249,19 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
           {/* Food */}
           {!gameOver && !gameWon && (
             <div
-              className="absolute bg-foreground flex items-center justify-center pixel-text"
+              className="absolute bg-background flex items-center justify-center p-0.5"
               style={{
                 left: food.x * CELL_SIZE,
                 top: food.y * CELL_SIZE,
                 width: CELL_SIZE,
                 height: CELL_SIZE,
-                fontSize: "8px",
-                color: "var(--background)"
               }}
             >
-              <span className="transform scale-75">{food.skill.substring(0, 2)}</span>
+              <img 
+                src={getSkillIconUrl(food.skill)} 
+                alt={food.skill}
+                className="w-full h-full object-contain"
+              />
             </div>
           )}
 
@@ -245,6 +282,42 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
               </button>
             </div>
           )}
+          </div>
+        </div>
+
+        {/* Mobile Touch Controls */}
+        <div className="md:hidden mb-4">
+          <div className="grid grid-cols-3 gap-2 max-w-[200px] mx-auto">
+            <div></div>
+            <button
+              onClick={() => handleDirectionChange({ x: 0, y: -1 })}
+              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+              disabled={!isPlaying}
+            >
+              <ArrowUp size={20} />
+            </button>
+            <div></div>
+            <button
+              onClick={() => handleDirectionChange({ x: -1, y: 0 })}
+              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+              disabled={!isPlaying}
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <button
+              onClick={() => handleDirectionChange({ x: 0, y: 1 })}
+              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+              disabled={!isPlaying}
+            >
+              <ArrowDown size={20} />
+            </button>
+            <button
+              onClick={() => handleDirectionChange({ x: 1, y: 0 })}
+              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+              disabled={!isPlaying}
+            >
+              <ArrowRight size={20} />
+            </button>
           </div>
         </div>
 

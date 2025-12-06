@@ -27,7 +27,7 @@ export default function Projects() {
       type: "demo",
       link: "",
       github: "https://github.com/LeetSaaS-s/HyperTube-Frontend",
-      demo: "https://www.youtube.com/watch?v=H_5u_DVTbbU",
+      demo: "https://youtu.be/N-ohDCg3ij0",
       tags: ["web", "fullstack"],
     },
     // add this project
@@ -37,7 +37,7 @@ export default function Projects() {
       technologies: ["Next.js", "React", "TypeScript", "TailwindCSS"],
       year: "2025",
       type: "deployed",
-      link: "https://beajousama.com",
+      link: "https://portfolio-iota-eosin-89.vercel.app/",
       github: "https://github.com/BEAJousama/portfolio",
       demo: "",
       tags: ["web", "fullstack"],
@@ -70,7 +70,7 @@ export default function Projects() {
       type: "demo",
       link: "",
       github: "https://github.com/BEAJousama/ft_transcendence",
-      demo: "https://stream.mux.com/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c/high.mp4",
+      demo: "https://youtu.be/sX8WaT4Rgtc",
       tags: ["web", "fullstack", "networking"],
     },
     {
@@ -81,7 +81,7 @@ export default function Projects() {
       type: "demo",
       link: "",
       github: "https://github.com/BEAJousama/websrv",
-      demo: "https://stream.mux.com/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c/high.mp4",
+      // demo: "https://youtu.be/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c",
       tags: ["networking", "systems"],
     },
     {
@@ -92,7 +92,7 @@ export default function Projects() {
       type: "demo",
       link: "",
       github: "https://github.com/BEAJousama/kfs_2",
-      demo: "https://stream.mux.com/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c/high.mp4",
+      // demo: "https://stream.mux.com/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c/high.mp4",
       tags: ["systems", "low-level"],
     },
     // add bgp project
@@ -104,7 +104,7 @@ export default function Projects() {
       type: "demo",
       link: "",
       github: "https://github.com/BEAJousama/BADASS",
-      demo: "",
+      // demo: "",
       tags: ["networking"],
     }
   ]
@@ -118,7 +118,7 @@ export default function Projects() {
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 3)
 
   return (
-    <section id="projects" className="md:ml-64 min-h-screen flex items-center">
+    <section id="projects" className="md:ml-64 min-h-[100dvh] flex items-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
         {/* Projects section with game-style cards */}
         <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>

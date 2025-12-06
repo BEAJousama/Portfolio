@@ -119,7 +119,7 @@ body {
   font-family: "JetBrains Mono", "Courier New", monospace;
   font-weight: 300;
   cursor: none;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   padding: 0;
 }
@@ -136,13 +136,13 @@ a, button, .retro-button, .sidebar-icon, .social-icon, [role="button"], input[ty
 
 html {
   scroll-behavior: smooth;
-  min-height: 100vh;
-  scroll-snap-type: y mandatory;
+  min-height: 100dvh;
+  /* scroll-snap-type: y mandatory; */
 }
 
 section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  /* scroll-snap-align: start; */
+  /* scroll-snap-stop: always; */
   padding: 4rem 0;
 }
 

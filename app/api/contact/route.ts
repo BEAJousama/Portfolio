@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
 
 export async function POST(request: Request) {
   try {
@@ -13,23 +14,31 @@ export async function POST(request: Request) {
       )
     }
 
-    // Here you can integrate with email service like:
-    // - Resend
-    // - SendGrid
-    // - Nodemailer
-    // - AWS SES
-    
-    // For now, we'll just log it (you'll need to set up an email service)
-    console.log('Contact form submission:', { name, email, message })
+    // Create transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    })
 
-    // Example with Resend (install: npm install resend)
-    // const resend = new Resend(process.env.RESEND_API_KEY)
-    // await resend.emails.send({
-    //   from: 'contact@yourdomain.com',
-    //   to: 'beajousama@gmail.com',
-    //   subject: `New contact from ${name}`,
-    //   html: `<p><strong>From:</strong> ${name} (${email})</p><p><strong>Message:</strong><br/>${message}</p>`,
-    // })
+    // Email to yourself
+    await transporter.sendMail({
+      from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      to: process.env.SMTP_TO || 'beajousama@gmail.com',
+      subject: `Portfolio Contact: ${name}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+      replyTo: email,
+    })
 
     return NextResponse.json(
       { message: 'Message sent successfully' },

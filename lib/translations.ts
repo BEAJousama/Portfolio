@@ -23,7 +23,7 @@ export const translations = {
     snakeWin: "All Skills Collected!",
     snakeRestart: "[ Restart ]",
     snakeClose: "[ Close ]",
-    snakeInstructions: "Use Arrow Keys or WASD to move",
+    snakeInstructions: "Use Arrow Keys, WASD, or Touch Controls to move",
     
     // About
     experience: "Experience",
@@ -108,7 +108,7 @@ export const translations = {
     snakeWin: "Toutes Les Compétences Collectées!",
     snakeRestart: "[ Recommencer ]",
     snakeClose: "[ Fermer ]",
-    snakeInstructions: "Utilisez les flèches ou WASD pour bouger",
+    snakeInstructions: "Utilisez les flèches, WASD, ou les contrôles tactiles pour bouger",
     
     // About
     experience: "Expérience",

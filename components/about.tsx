@@ -6,7 +6,7 @@ export default function About() {
   const { t } = useLanguage()
   
   return (
-    <section id="about" className="md:ml-64 min-h-screen flex items-center">
+    <section id="about" className="md:ml-64 min-h-[100dvh] flex items-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
         <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>
           {t.about}

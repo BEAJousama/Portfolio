@@ -83,7 +83,7 @@ export default function Contact() {
   }
   
   return (
-    <section id="contact" className="md:ml-64 min-h-screen flex items-center">
+    <section id="contact" className="md:ml-64 min-h-[100dvh] flex items-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
         <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>
           {t.contact}
@@ -182,7 +182,7 @@ export default function Contact() {
               <span className="hidden sm:inline">{t.emailme}</span>
             </a>
             <a
-              href="https://github.com/ousamabeaj"
+              href="https://github.com/beajousama"
               target="_blank"
               rel="noopener noreferrer"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"

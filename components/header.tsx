@@ -81,7 +81,7 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 bg-background border-b-4 border-foreground md:left-0 md:top-0 md:h-screen md:w-64 md:border-b-0 md:border-r-4 md:flex md:flex-col md:justify-between"
+        className="fixed top-0 left-0 right-0 z-50 bg-background border-b-4 border-foreground md:left-0 md:top-0 md:h-[100dvh] md:w-64 md:border-b-0 md:border-r-4 md:flex md:flex-col md:justify-between"
         style={{ padding: 0 }}
       >
         <div

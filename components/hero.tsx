@@ -20,7 +20,7 @@ export default function Hero() {
   }
   
   return (
-    <section id="home" className="md:ml-64 min-h-screen flex items-center justify-center">
+    <section id="home" className="md:ml-64 min-h-[100dvh] flex items-center justify-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
 
         {/* Profile Image */}
