@@ -10,7 +10,7 @@ export default function Hero() {
   const [isGameOpen, setIsGameOpen] = useState(false)
   
   const handleDownloadCV = () => {
-    const cvPath = language === "fr" ? "/cv-fr.pdf" : "/cv-en.pdf"
+    const cvPath = language === "fr" ? "/cv.fr.pdf" : "/cv.en.pdf"
     const link = document.createElement("a")
     link.href = cvPath
     link.download = `Ousama_Beaj_CV_${language.toUpperCase()}.pdf`
