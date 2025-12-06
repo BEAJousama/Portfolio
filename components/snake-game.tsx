@@ -226,21 +226,22 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
 
         {/* Game Grid */}
         <div className="flex justify-center mb-6">
-          <div className="relative pixel-border bg-card overflow-hidden" style={{ 
-            width: Math.min(GRID_SIZE * CELL_SIZE, 400), 
-            height: Math.min(GRID_SIZE * CELL_SIZE, 400),
-            aspectRatio: '1/1'
-          }}>
+          <div 
+            className="relative pixel-border bg-card overflow-hidden w-full max-w-[400px]" 
+            style={{ 
+              aspectRatio: '1/1'
+            }}
+          >
           {/* Snake */}
           {snake.map((segment, index) => (
             <div
               key={index}
               className="absolute bg-accent"
               style={{
-                left: segment.x * CELL_SIZE,
-                top: segment.y * CELL_SIZE,
-                width: CELL_SIZE,
-                height: CELL_SIZE,
+                left: `${(segment.x / GRID_SIZE) * 100}%`,
+                top: `${(segment.y / GRID_SIZE) * 100}%`,
+                width: `${(1 / GRID_SIZE) * 100}%`,
+                height: `${(1 / GRID_SIZE) * 100}%`,
                 opacity: index === 0 ? 1 : 0.7
               }}
             />
@@ -251,10 +252,10 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
             <div
               className="absolute bg-background flex items-center justify-center p-0.5"
               style={{
-                left: food.x * CELL_SIZE,
-                top: food.y * CELL_SIZE,
-                width: CELL_SIZE,
-                height: CELL_SIZE,
+                left: `${(food.x / GRID_SIZE) * 100}%`,
+                top: `${(food.y / GRID_SIZE) * 100}%`,
+                width: `${(1 / GRID_SIZE) * 100}%`,
+                height: `${(1 / GRID_SIZE) * 100}%`,
               }}
             >
               <img 
