@@ -118,7 +118,7 @@ export default function Projects() {
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 3)
 
   return (
-    <section id="projects" className="md:ml-64 min-h-[100dvh] flex items-center">
+    <section id="projects" className="md:ml-64 min-h-dvh flex items-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
         {/* Projects section with game-style cards */}
         <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>
@@ -175,32 +175,34 @@ export default function Projects() {
                       </a>
                     </div>
                   )}
-                  <div>
                     {project.type === "deployed" && project.link && (
-                      <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80"
-                      style={{ padding: "0.25rem 0.75rem" }}
-                      >
-                        [LIVE]
-                      </a>
-                    )}
-                    {project.type === "demo" && project.demo && (
-                      <button
-                        onClick={() => {
-                          setCurrentVideo(project.demo)
-                          setCurrentProjectTitle(project.title)
-                          setVideoDialogOpen(true)
-                        }}
+                      <div>
+                        <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80"
                         style={{ padding: "0.25rem 0.75rem" }}
-                      >
-                        [DEMO]
-                      </button>
+                        >
+                          [LIVE]
+                        </a>
+                      </div>
                     )}
-                  </div>
+                    {project.type === "demo" && project.demo && (
+                      <div>
+                        <button
+                          onClick={() => {
+                            setCurrentVideo(project.demo)
+                            setCurrentProjectTitle(project.title)
+                            setVideoDialogOpen(true)
+                          }}
+                          className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80"
+                          style={{ padding: "0.25rem 0.75rem" }}
+                        >
+                          [DEMO]
+                        </button>
+                      </div>
+                    )}
                 </div>
               </div>
 

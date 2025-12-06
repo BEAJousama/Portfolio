@@ -83,7 +83,7 @@ export default function Contact() {
   }
   
   return (
-    <section id="contact" className="md:ml-64 min-h-[100dvh] flex items-center">
+    <section id="contact" className="md:ml-64 min-h-dvh flex items-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
         <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>
           {t.contact}

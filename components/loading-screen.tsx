@@ -26,7 +26,7 @@ export default function LoadingScreen() {
   }, [])
 
   return (
-    <div className="loading-screen w-screen h-[100dvh] flex items-center justify-center z-50" style={{ background: theme === "dark" ? "#2b2520" : "#c9b896" }}>
+    <div className="loading-screen w-screen h-dvh flex items-center justify-center z-50" style={{ background: theme === "dark" ? "#2b2520" : "#c9b896" }}>
       <div className="loading-content">
         {/* Retro logo/icon */}
         <div className="loading-logo pixel-border flex items-center justify-center" style={{ background: theme === "dark" ? "#3a332b" : "#c9b896" }}>

@@ -24,10 +24,12 @@ export default function VideoPlayer({ src, poster, title }: VideoPlayerProps) {
   const [isMuted, setIsMuted] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [playerReady, setPlayerReady] = useState(false)
+  const [showControls, setShowControls] = useState(true)
   const playerRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const playerDivRef = useRef<HTMLDivElement>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Extract YouTube video ID from URL
   const getYouTubeVideoId = (url: string) => {
@@ -161,15 +163,34 @@ export default function VideoPlayer({ src, poster, title }: VideoPlayerProps) {
     }
   }
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = async () => {
     if (!containerRef.current) return
 
-    if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen()
-      setIsFullscreen(true)
-    } else {
-      document.exitFullscreen()
-      setIsFullscreen(false)
+    try {
+      if (!document.fullscreenElement) {
+        // Try standard fullscreen API
+        if (containerRef.current.requestFullscreen) {
+          await containerRef.current.requestFullscreen()
+        } 
+        // Fallback for Safari/iOS
+        else if ((containerRef.current as any).webkitRequestFullscreen) {
+          await (containerRef.current as any).webkitRequestFullscreen()
+        }
+        // For mobile - try to make iframe fullscreen
+        else if (playerDivRef.current && (playerDivRef.current as any).webkitEnterFullscreen) {
+          (playerDivRef.current as any).webkitEnterFullscreen()
+        }
+        setIsFullscreen(true)
+      } else {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen()
+        } else if ((document as any).webkitExitFullscreen) {
+          await (document as any).webkitExitFullscreen()
+        }
+        setIsFullscreen(false)
+      }
+    } catch (error) {
+      console.error('Fullscreen error:', error)
     }
   }
 
@@ -179,11 +200,43 @@ export default function VideoPlayer({ src, poster, title }: VideoPlayerProps) {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`
   }
 
+  const handleMouseMove = () => {
+    setShowControls(true)
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current)
+    }
+    if (isPlaying) {
+      controlsTimeoutRef.current = setTimeout(() => {
+        setShowControls(false)
+      }, 3000)
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isPlaying) {
+      setShowControls(true)
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current)
+      }
+    }
+  }, [isPlaying])
+
   return (
     <div
       ref={containerRef}
       className="relative w-full bg-black"
       style={{ aspectRatio: "16/9" }}
+      onMouseMove={handleMouseMove}
+      onTouchStart={handleMouseMove}
+      onTouchMove={handleMouseMove}
     >
       {/* YouTube Player */}
       <div ref={playerDivRef} className="w-full h-full" />
@@ -210,8 +263,8 @@ export default function VideoPlayer({ src, poster, title }: VideoPlayerProps) {
       )}
 
       {/* Custom Controls */}
-      {playerReady && (
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4">
+      {playerReady && showControls && (
+        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 to-transparent p-4 transition-opacity duration-300">
           {/* Progress Bar */}
           <div className="mb-3">
             <input

@@ -25,7 +25,7 @@ export default function Skills() {
   ]
 
   return (
-    <section id="skills" className="md:ml-64 min-h-[100dvh] flex items-center">
+    <section id="skills" className="md:ml-64 min-h-dvh flex items-center">
       <div className="w-full max-w-6xl mx-auto" style={{ padding: "0 1.5rem" }}>
         {/* Skills section with game-style grid */}
         <h2 className="game-title text-lg md:text-xl" style={{ marginBottom: "3rem" }}>

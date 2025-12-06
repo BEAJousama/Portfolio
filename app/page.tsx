@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-[100dvh] bg-background text-foreground" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+        <div className="min-h-dvh bg-background text-foreground" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.3s ease' }}>
           <CustomCursor />
           <Header />
           <main>
