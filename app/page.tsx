@@ -14,6 +14,7 @@ const Skills = dynamic(() => import("@/components/skills"), { ssr: false })
 const Projects = dynamic(() => import("@/components/projects"), { ssr: false })
 const Contact = dynamic(() => import("@/components/contact"), { ssr: false })
 const CustomCursor = dynamic(() => import("@/components/custom-cursor"), { ssr: false })
+const ParticlesBackground = dynamic(() => import("@/components/particles-background"), { ssr: false })
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -83,9 +84,10 @@ export default function Home() {
     <ThemeProvider>
       <LanguageProvider>
         <div className="min-h-dvh bg-background text-foreground" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+          <ParticlesBackground />
           <CustomCursor />
           <Header />
-          <main>
+          <main style={{ position: "relative", zIndex: 1 }}>
             <Hero />
             <About />
             <Skills />

@@ -78,7 +78,7 @@ export const translations = {
     errorEmailRequired: "[!] Email is required",
     errorEmailInvalid: "[!] Please enter a valid email address",
     errorMessageRequired: "[!] Message is required",
-    copyright: "© 2025 Beaj Ousama • All rights reserved",
+    copyright: "© 2026 Beaj Ousama • All rights reserved",
     emailme: "Email",
     
     // Role
@@ -163,7 +163,7 @@ export const translations = {
     errorEmailRequired: "[!] L'email est requis",
     errorEmailInvalid: "[!] Veuillez entrer une adresse email valide",
     errorMessageRequired: "[!] Le message est requis",
-    copyright: "© 2025 Beaj Ousama • Tous droits réservés",
+    copyright: "© 2026 Beaj Ousama • Tous droits réservés",
     emailme: "Email",
     
     // Role
