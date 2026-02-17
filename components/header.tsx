@@ -1,18 +1,24 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, Github, Linkedin, Sun, Moon } from "lucide-react"
+import { Mail, Github, Linkedin, Sun, Moon, Volume2, VolumeX, Settings, Menu, X } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useTheme } from "@/contexts/ThemeContext"
+import { useSound } from "@/hooks/use-sound"
+import { useSoundSettings } from "@/contexts/SoundContext"
 
 export default function Header() {
   const [activeSection, setActiveSection] = useState("home")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const lastScrollBucketRef = useRef<number | null>(null)
   const { language, setLanguage, t } = useLanguage()
   const { theme, toggleTheme } = useTheme()
+  const { playClick, playScrollTick } = useSound()
+  const { uiSoundEnabled, toggleUiSound } = useSoundSettings()
 
   const navItems = [
     { id: "home", label: t.home },
@@ -28,12 +34,21 @@ export default function Header() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const progress = Math.min(scrollTop / docHeight, 1)
       setScrollProgress(progress)
+
+      // Play a subtle tick as the rotating logo progresses (in discrete buckets to avoid spam)
+      const bucket = Math.floor(progress * 10) // 0-10
+      if (bucket > 0 && bucket !== lastScrollBucketRef.current) {
+        lastScrollBucketRef.current = bucket
+        if (uiSoundEnabled) {
+          playScrollTick()
+        }
+      }
     }
 
     window.addEventListener("scroll", handleScrollProgress)
     handleScrollProgress() // Initialize on mount
     return () => window.removeEventListener("scroll", handleScrollProgress)
-  }, [])
+  }, [uiSoundEnabled, playScrollTick])
 
   useEffect(() => {
     const observerOptions = {
@@ -70,6 +85,9 @@ export default function Header() {
   }, [])
 
   const handleScroll = (id: string) => {
+    if (uiSoundEnabled) {
+      playClick()
+    }
     setActiveSection(id)
     setMobileMenuOpen(false)
     const element = document.getElementById(id)
@@ -107,11 +125,16 @@ export default function Header() {
             </div>
             {/* Mobile menu button */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden pixel-border bg-accent text-accent-foreground"
-              style={{ padding: "0.5rem" }}
+              onClick={() => {
+                if (uiSoundEnabled) {
+                  playClick()
+                }
+                setMobileMenuOpen(!mobileMenuOpen)
+              }}
+              className="md:hidden pixel-border bg-accent text-accent-foreground transition-transform duration-300 ease-in-out"
+              style={{ padding: "0.5rem", transform: mobileMenuOpen ? "rotate(90deg)" : "rotate(0deg)" }}
             >
-              ☰
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
 
@@ -160,7 +183,12 @@ export default function Header() {
             >
               <div className="flex gap-2 mb-4">
                 <button
-                  onClick={() => setLanguage("en")}
+                  onClick={() => {
+                    if (uiSoundEnabled) {
+                      playClick()
+                    }
+                    setLanguage("en")
+                  }}
                   className={`pixel-border pixel-text text-sm font-bold flex-1 transition-colors ${
                     language === "en" 
                       ? "bg-accent text-accent-foreground" 
@@ -171,7 +199,12 @@ export default function Header() {
                   EN
                 </button>
                 <button
-                  onClick={() => setLanguage("fr")}
+                  onClick={() => {
+                    if (uiSoundEnabled) {
+                      playClick()
+                    }
+                    setLanguage("fr")
+                  }}
                   className={`pixel-border pixel-text text-sm font-bold flex-1 transition-colors ${
                     language === "fr" 
                       ? "bg-accent text-accent-foreground" 
@@ -183,11 +216,30 @@ export default function Header() {
                 </button>
               </div>
               <button
-                onClick={toggleTheme}
-                className="w-full pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors"
+                onClick={() => {
+                  if (uiSoundEnabled) {
+                    playClick()
+                  }
+                  toggleTheme()
+                }}
+                className="w-full pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors flex items-center justify-between"
                 style={{ padding: "0.75rem" }}
               >
-                {theme === "light" ? "🌙 DARK MODE" : "☀️ LIGHT MODE"}
+                <span>{theme === "light" ? "Dark mode" : "Light mode"}</span>
+                {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+              </button>
+              <button
+                onClick={() => {
+                  if (uiSoundEnabled) {
+                    playClick()
+                  }
+                  toggleUiSound()
+                }}
+                className="w-full mt-2 pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors flex items-center justify-between"
+                style={{ padding: "0.75rem" }}
+              >
+                <span>UI sounds</span>
+                {uiSoundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
             </div>
           </div>
@@ -197,19 +249,17 @@ export default function Header() {
           className="hidden md:flex border-t-4 border-foreground items-center justify-center"
           style={{ padding: "1.5rem", gap: "1.5rem" }}
         >
-          <button
-            onClick={toggleTheme}
-            className="sidebar-icon"
-            title={theme === "light" ? "Dark Mode" : "Light Mode"}
-          >
-            {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-          </button>
           <Link
             href="https://github.com/beajousama"
             target="_blank"
             rel="noopener noreferrer"
-            className="sidebar-icon"
+            className="sidebar-icon flex items-center justify-center"
             title="GitHub"
+            onClick={() => {
+              if (uiSoundEnabled) {
+                playClick()
+              }
+            }}
           >
             <Github size={20} />
           </Link>
@@ -217,12 +267,26 @@ export default function Header() {
             href="https://www.linkedin.com/in/ousama-beaj/"
             target="_blank"
             rel="noopener noreferrer"
-            className="sidebar-icon"
+            className="sidebar-icon flex items-center justify-center"
             title="LinkedIn"
+            onClick={() => {
+              if (uiSoundEnabled) {
+                playClick()
+              }
+            }}
           >
             <Linkedin size={20} />
           </Link>
-          <Link href="mailto:beajousama@gmail.com" className="sidebar-icon" title="Gmail">
+          <Link
+            href="mailto:beajousama@gmail.com"
+            className="sidebar-icon flex items-center justify-center"
+            title="Gmail"
+            onClick={() => {
+              if (uiSoundEnabled) {
+                playClick()
+              }
+            }}
+          >
             <Mail size={20} />
           </Link>
         </div>
@@ -253,37 +317,127 @@ export default function Header() {
         </svg>
       </div>
 
-      {/* Language Switcher - Desktop (Top Left) */}
-      <div className="hidden md:block fixed top-4 left-[280px] pixel-border bg-background z-50" style={{ zIndex: 9999 }}>
-        <div className="flex">
-          <button
-            onClick={() => setLanguage("en")}
-            className={`pixel-text font-bold transition-colors ${
-              language === "en" 
-                ? "bg-accent text-accent-foreground" 
-                : "bg-card text-foreground hover:bg-muted"
-            }`}
-            style={{ padding: "clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem)", borderRight: "3px solid var(--foreground)", fontSize: "clamp(0.65rem, 1vw, 0.75rem)" }}
-          >
-            EN
-          </button>
-          <button
-            onClick={() => setLanguage("fr")}
-            className={`pixel-text font-bold transition-colors ${
-              language === "fr" 
-                ? "bg-accent text-accent-foreground" 
-                : "bg-card text-foreground hover:bg-muted"
-            }`}
-            style={{ padding: "clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem)", fontSize: "clamp(0.65rem, 1vw, 0.75rem)" }}
-          >
-            FR
-          </button>
-        </div>
+      {/* Language + Settings - Desktop (Top Left) */}
+      <div className="hidden md:block fixed top-4 left-[280px] z-50" style={{ zIndex: 9999 }}>
+        <button
+          onClick={() => {
+            if (uiSoundEnabled) {
+              playClick()
+            }
+            setSettingsOpen(true)
+          }}
+          className="sidebar-icon flex items-center justify-center"
+          title="Settings"
+          style={{ width: "42px", height: "42px" }}
+        >
+          <Settings size={18} />
+        </button>
       </div>
+
+      {/* Settings Modal (Desktop) */}
+      {settingsOpen && (
+        <div
+          className="fixed inset-0 z-9998 flex items-center justify-center bg-background/80 backdrop-blur-sm"
+          onClick={() => setSettingsOpen(false)}
+        >
+          <div
+            className="pixel-border bg-background p-4 w-full max-w-sm mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="game-title text-sm">Settings</h3>
+              <button
+                onClick={() => setSettingsOpen(false)}
+                className="pixel-border pixel-text text-xs bg-card hover:bg-muted px-2 py-1"
+              >
+                CLOSE
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Language */}
+              <div>
+                <p className="pixel-text text-xs mb-2">Language</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      if (uiSoundEnabled) {
+                        playClick()
+                      }
+                      setLanguage("en")
+                    }}
+                    className={`pixel-border pixel-text text-xs font-bold flex-1 transition-colors ${
+                      language === "en"
+                        ? "bg-accent text-accent-foreground"
+                        : "bg-card text-foreground hover:bg-muted"
+                    }`}
+                    style={{ padding: "0.5rem 0.75rem" }}
+                  >
+                    EN
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (uiSoundEnabled) {
+                        playClick()
+                      }
+                      setLanguage("fr")
+                    }}
+                    className={`pixel-border pixel-text text-xs font-bold flex-1 transition-colors ${
+                      language === "fr"
+                        ? "bg-accent text-accent-foreground"
+                        : "bg-card text-foreground hover:bg-muted"
+                    }`}
+                    style={{ padding: "0.5rem 0.75rem" }}
+                  >
+                    FR
+                  </button>
+                </div>
+              </div>
+
+              {/* Theme */}
+              <div>
+                <p className="pixel-text text-xs mb-2">Theme</p>
+                <button
+                  onClick={() => {
+                    if (uiSoundEnabled) {
+                      playClick()
+                    }
+                    toggleTheme()
+                  }}
+                  className="pixel-border pixel-text text-xs font-bold bg-card hover:bg-muted px-3 py-2 w-full flex items-center justify-between"
+                >
+                  <span>{theme === "light" ? "Light mode" : "Dark mode"}</span>
+                  {theme === "light" ? <Sun size={16} /> : <Moon size={16} />}
+                </button>
+              </div>
+
+              {/* UI Sounds */}
+              <div>
+                <p className="pixel-text text-xs mb-2">UI Sounds</p>
+                <button
+                  onClick={() => {
+                    if (uiSoundEnabled) {
+                      playClick()
+                    }
+                    toggleUiSound()
+                  }}
+                  className="pixel-border pixel-text text-xs font-bold bg-card hover:bg-muted px-3 py-2 w-full flex items-center justify-between"
+                >
+                  <span>{uiSoundEnabled ? "On" : "Off"}</span>
+                  {uiSoundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+                </button>
+                <p className="pixel-text text-[0.6rem] mt-1 opacity-70">
+                  (Snake game sounds stay on even when UI sounds are muted.)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @media (max-width: 768px) {
-          main {
+          :global(main) {
             margin-top: 100px;
           }
         }

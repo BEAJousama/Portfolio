@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import LoadingScreen from "@/components/loading-screen"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 import { ThemeProvider } from "@/contexts/ThemeContext"
+import { SoundProvider } from "@/contexts/SoundContext"
 
 // Dynamically import all components with no SSR to prevent flash
 const Header = dynamic(() => import("@/components/header"), { ssr: false })
@@ -81,21 +82,23 @@ export default function Home() {
   }
 
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <div className="min-h-dvh bg-background text-foreground" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.3s ease' }}>
-          <ParticlesBackground />
-          <CustomCursor />
-          <Header />
-          <main style={{ position: "relative", zIndex: 1 }}>
-            <Hero />
-            <About />
-            <Skills />
-            <Projects />
-            <Contact />
-          </main>
-        </div>
-      </LanguageProvider>
-    </ThemeProvider>
+    <SoundProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <div className="min-h-dvh bg-background text-foreground" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+            <ParticlesBackground />
+            <CustomCursor />
+            <Header />
+            <main style={{ position: "relative", zIndex: 1 }}>
+              <Hero />
+              <About />
+              <Skills />
+              <Projects />
+              <Contact />
+            </main>
+          </div>
+        </LanguageProvider>
+      </ThemeProvider>
+    </SoundProvider>
   )
 }

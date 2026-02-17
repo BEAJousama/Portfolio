@@ -3,10 +3,14 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { useSound } from "@/hooks/use-sound"
+import { useSoundSettings } from "@/contexts/SoundContext"
 import SnakeGame from "@/components/snake-game"
 
 export default function Hero() {
   const { t, language } = useLanguage()
+  const { playClick } = useSound()
+  const { uiSoundEnabled } = useSoundSettings()
   const [isGameOpen, setIsGameOpen] = useState(false)
   const [typedTitle, setTypedTitle] = useState("")
   const [showContent, setShowContent] = useState(false)
@@ -94,7 +98,12 @@ export default function Hero() {
         {/* CTA Buttons with smooth hover effects */}
         <div className="flex flex-col md:flex-row justify-center items-center fade-in" style={{ gap: "clamp(0.75rem, 1.5vw, 1rem)", opacity: 0, animationDelay: "1.1s" }}>
           <button
-            onClick={() => setIsGameOpen(true)}
+            onClick={() => {
+              if (uiSoundEnabled) {
+                playClick()
+              }
+              setIsGameOpen(true)
+            }}
             className="retro-button font-bold"
             style={{ 
               padding: "clamp(0.5rem, 1vh, 0.75rem) clamp(1rem, 2vw, 1.5rem)", 
@@ -105,6 +114,9 @@ export default function Hero() {
           </button>
           <button
             onClick={() => {
+              if (uiSoundEnabled) {
+                playClick()
+              }
               const element = document.getElementById("projects")
               element?.scrollIntoView({ behavior: "smooth" })
             }}
@@ -126,7 +138,12 @@ export default function Hero() {
             {t.viewProjects}
           </button>
           <button
-            onClick={handleDownloadCV}
+            onClick={() => {
+              if (uiSoundEnabled) {
+                playClick()
+              }
+              handleDownloadCV()
+            }}
             className="pixel-border bg-muted text-foreground border-2 cursor-pointer font-bold"
             style={{ 
               padding: "clamp(0.5rem, 1vh, 0.75rem) clamp(1rem, 2vw, 1.5rem)", 

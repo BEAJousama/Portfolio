@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
+import { useSound } from "@/hooks/use-sound"
 
 const GRID_SIZE = 20
 const CELL_SIZE = 20
@@ -44,6 +45,7 @@ const getSkillIconUrl = (skill: string): string => {
 
 export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { t } = useLanguage()
+  const { playClick, playCollect, playGameOver, playWin } = useSound()
   const [snake, setSnake] = useState<Position[]>(INITIAL_SNAKE)
   const [direction, setDirection] = useState<Direction>(INITIAL_DIRECTION)
   const [food, setFood] = useState<Position & { skill: string }>({ x: 15, y: 15, skill: ALL_SKILLS[0] })
@@ -53,6 +55,9 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
   const [isPlaying, setIsPlaying] = useState(false)
   const [speed, setSpeed] = useState(150)
   const gameLoopRef = useRef<NodeJS.Timeout | null>(null)
+  const [lastCollectedSkill, setLastCollectedSkill] = useState<string | null>(null)
+  const [showCollectedPopup, setShowCollectedPopup] = useState(false)
+  const popupTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleDirectionChange = useCallback((newDirection: Direction) => {
     if (!isPlaying) return
@@ -87,6 +92,8 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
     setGameWon(false)
     setIsPlaying(true)
     setSpeed(150)
+    setLastCollectedSkill(null)
+    setShowCollectedPopup(false)
   }, [getRandomPosition])
 
   const moveSnake = useCallback(() => {
@@ -100,6 +107,7 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
 
       // Check collision with self
       if (prevSnake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+        playGameOver()
         setGameOver(true)
         setIsPlaying(false)
         return prevSnake
@@ -111,9 +119,23 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
       if (newHead.x === food.x && newHead.y === food.y) {
         const newCollected = [...collectedSkills, food.skill]
         setCollectedSkills(newCollected)
+
+        // Show temporary popup for collected skill (especially for mobile)
+        setLastCollectedSkill(food.skill)
+        setShowCollectedPopup(true)
+        if (popupTimeoutRef.current) {
+          clearTimeout(popupTimeoutRef.current)
+        }
+        popupTimeoutRef.current = setTimeout(() => {
+          setShowCollectedPopup(false)
+        }, 2000)
+
+        // Play collect sound
+        playCollect()
         
         // Check win condition
         if (newCollected.length === ALL_SKILLS.length) {
+          playWin()
           setGameWon(true)
           setIsPlaying(false)
           return newSnake
@@ -141,6 +163,14 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
       }
     }
   }, [isPlaying, gameOver, gameWon, moveSnake, speed])
+
+  useEffect(() => {
+    return () => {
+      if (popupTimeoutRef.current) {
+        clearTimeout(popupTimeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -186,6 +216,12 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
   }, [isOpen, isPlaying, onClose, handleDirectionChange])
 
   useEffect(() => {
+    if (!isOpen) {
+      // Stop the game when modal closes so it doesn't continue in background
+      setIsPlaying(false)
+      return
+    }
+
     if (isOpen && !isPlaying && !gameOver && !gameWon) {
       resetGame()
     }
@@ -194,16 +230,17 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
   if (!isOpen) return null
 
   return (
-    <div 
-      className="fixed inset-0 bg-background/95 backdrop-blur-sm z-9999 flex items-center justify-center"
+    <div
+      className="fixed inset-0 bg-background/95 backdrop-blur-sm z-9999 flex justify-center items-center px-4"
+      style={{ height: "100dvh" }}
       onClick={onClose}
     >
       <div 
-        className="pixel-border bg-background p-4 md:p-8 max-w-2xl w-full mx-4"
+        className="pixel-border bg-background p-4 md:p-8 max-w-2xl w-full mx-auto flex flex-col max-h-[calc(100dvh-3rem)] relative"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+        {/* Header - stays visible while content scrolls */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
           <h2 className="game-title text-sm md:text-lg">{t.snakeGameTitle}</h2>
           <button
             onClick={onClose}
@@ -213,131 +250,157 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
           </button>
         </div>
 
-        {/* Instructions */}
-        <p className="pixel-text text-xs mb-4 text-center">
-          {t.snakeInstructions}
-        </p>
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto">
+          {/* Instructions */}
+          <p className="pixel-text text-xs mb-4 text-center">
+            {t.snakeInstructions}
+          </p>
 
-        {/* Score */}
-        <div className="flex flex-col sm:flex-row justify-between gap-2 mb-4 pixel-text text-xs sm:text-sm">
-          <span>{t.snakeScore}: {collectedSkills.length}/{ALL_SKILLS.length}</span>
-          <span className="truncate">Next: {food.skill}</span>
-        </div>
+          {/* Score */}
+          <div className="flex flex-col sm:flex-row justify-between gap-2 mb-4 pixel-text text-xs sm:text-sm">
+            <span>{t.snakeScore}: {collectedSkills.length}/{ALL_SKILLS.length}</span>
+            <span className="truncate">Next: {food.skill}</span>
+          </div>
 
-        {/* Game Grid */}
-        <div className="flex justify-center mb-6">
-          <div 
-            className="relative pixel-border bg-card overflow-hidden w-full max-w-[400px]" 
-            style={{ 
-              aspectRatio: '1/1'
-            }}
-          >
-          {/* Snake */}
-          {snake.map((segment, index) => (
-            <div
-              key={index}
-              className="absolute bg-accent"
-              style={{
-                left: `${(segment.x / GRID_SIZE) * 100}%`,
-                top: `${(segment.y / GRID_SIZE) * 100}%`,
-                width: `${(1 / GRID_SIZE) * 100}%`,
-                height: `${(1 / GRID_SIZE) * 100}%`,
-                opacity: index === 0 ? 1 : 0.7
-              }}
-            />
-          ))}
-
-          {/* Food */}
-          {!gameOver && !gameWon && (
-            <div
-              className="absolute bg-background flex items-center justify-center p-0.5"
-              style={{
-                left: `${(food.x / GRID_SIZE) * 100}%`,
-                top: `${(food.y / GRID_SIZE) * 100}%`,
-                width: `${(1 / GRID_SIZE) * 100}%`,
-                height: `${(1 / GRID_SIZE) * 100}%`,
+          {/* Game Grid */}
+          <div className="flex justify-center mb-6">
+            <div 
+              className="relative pixel-border bg-card overflow-hidden w-full max-w-[400px]" 
+              style={{ 
+                aspectRatio: '1/1'
               }}
             >
-              <img 
-                src={getSkillIconUrl(food.skill)} 
-                alt={food.skill}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          )}
+            {/* Mobile collected popup centered over the canvas */}
+            {lastCollectedSkill && showCollectedPopup && (
+              <div className="md:hidden absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                <div className="pixel-border bg-card px-3 py-1 text-center shadow-md">
+                  <span className="pixel-text text-xs">
+                    + {lastCollectedSkill}
+                  </span>
+                </div>
+              </div>
+            )}
 
-          {/* Game Over Overlay */}
-          {(gameOver || gameWon) && (
-            <div className="absolute inset-0 bg-background/90 flex flex-col items-center justify-center">
-              <h3 className="game-title text-center text-md mb-4">
-                {gameWon ? t.snakeWin : t.snakeGameOver}
-              </h3>
-              <p className="pixel-text text-sm mb-4">
-                {t.snakeScore}: {collectedSkills.length}/{ALL_SKILLS.length}
-              </p>
-              <button
-                onClick={resetGame}
-                className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:bg-muted transition-colors px-4 py-2"
+            {/* Snake */}
+            {snake.map((segment, index) => (
+              <div
+                key={index}
+                className="absolute bg-accent"
+                style={{
+                  left: `${(segment.x / GRID_SIZE) * 100}%`,
+                  top: `${(segment.y / GRID_SIZE) * 100}%`,
+                  width: `${(1 / GRID_SIZE) * 100}%`,
+                  height: `${(1 / GRID_SIZE) * 100}%`,
+                  opacity: index === 0 ? 1 : 0.7
+                }}
+              />
+            ))}
+
+            {/* Food */}
+            {!gameOver && !gameWon && (
+              <div
+                className="absolute bg-background flex items-center justify-center p-0.5"
+                style={{
+                  left: `${(food.x / GRID_SIZE) * 100}%`,
+                  top: `${(food.y / GRID_SIZE) * 100}%`,
+                  width: `${(1 / GRID_SIZE) * 100}%`,
+                  height: `${(1 / GRID_SIZE) * 100}%`,
+                }}
               >
-                {t.snakeRestart}
+                <img 
+                  src={getSkillIconUrl(food.skill)} 
+                  alt={food.skill}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            )}
+
+            {/* Game Over Overlay */}
+            {(gameOver || gameWon) && (
+              <div className="absolute inset-0 bg-background/90 flex flex-col items-center justify-center">
+                <h3 className="game-title text-center text-md mb-4">
+                  {gameWon ? t.snakeWin : t.snakeGameOver}
+                </h3>
+                <p className="pixel-text text-sm mb-4">
+                  {t.snakeScore}: {collectedSkills.length}/{ALL_SKILLS.length}
+                </p>
+                <button
+                  onClick={resetGame}
+                  className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:bg-muted transition-colors px-4 py-2"
+                >
+                  {t.snakeRestart}
+                </button>
+              </div>
+            )}
+            </div>
+          </div>
+
+          {/* Mobile Touch Controls */}
+          <div className="md:hidden mb-4">
+            <div className="grid grid-cols-3 gap-2 max-w-[200px] mx-auto">
+              <div></div>
+              <button
+                onClick={() => {
+                  playClick()
+                  handleDirectionChange({ x: 0, y: -1 })
+                }}
+                className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+                disabled={!isPlaying}
+              >
+                <ArrowUp size={20} />
+              </button>
+              <div></div>
+              <button
+                onClick={() => {
+                  playClick()
+                  handleDirectionChange({ x: -1, y: 0 })
+                }}
+                className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+                disabled={!isPlaying}
+              >
+                <ArrowLeft size={20} />
+              </button>
+              <button
+                onClick={() => {
+                  playClick()
+                  handleDirectionChange({ x: 0, y: 1 })
+                }}
+                className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+                disabled={!isPlaying}
+              >
+                <ArrowDown size={20} />
+              </button>
+              <button
+                onClick={() => {
+                  playClick()
+                  handleDirectionChange({ x: 1, y: 0 })
+                }}
+                className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
+                disabled={!isPlaying}
+              >
+                <ArrowRight size={20} />
               </button>
             </div>
-          )}
           </div>
-        </div>
 
-        {/* Mobile Touch Controls */}
-        <div className="md:hidden mb-4">
-          <div className="grid grid-cols-3 gap-2 max-w-[200px] mx-auto">
-            <div></div>
-            <button
-              onClick={() => handleDirectionChange({ x: 0, y: -1 })}
-              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
-              disabled={!isPlaying}
-            >
-              <ArrowUp size={20} />
-            </button>
-            <div></div>
-            <button
-              onClick={() => handleDirectionChange({ x: -1, y: 0 })}
-              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
-              disabled={!isPlaying}
-            >
-              <ArrowLeft size={20} />
-            </button>
-            <button
-              onClick={() => handleDirectionChange({ x: 0, y: 1 })}
-              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
-              disabled={!isPlaying}
-            >
-              <ArrowDown size={20} />
-            </button>
-            <button
-              onClick={() => handleDirectionChange({ x: 1, y: 0 })}
-              className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
-              disabled={!isPlaying}
-            >
-              <ArrowRight size={20} />
-            </button>
-          </div>
-        </div>
-
-        {/* Collected Skills */}
-        <div className="pixel-border bg-card p-3">
-          <h4 className="pixel-text text-xs font-bold mb-2">Collected:</h4>
-          <div className="flex flex-wrap gap-1">
-            {collectedSkills.length === 0 ? (
-              <span className="pixel-text text-xs">No skills collected yet...</span>
-            ) : (
-              collectedSkills.map((skill, i) => (
-                <span
-                  key={i}
-                  className="pixel-border pixel-text bg-accent text-accent-foreground text-xs px-2 py-1"
-                >
-                  {skill}
-                </span>
-              ))
-            )}
+          {/* Collected Skills */}
+          <div className="hidden md:block pixel-border bg-card p-3">
+            <h4 className="pixel-text text-xs font-bold mb-2">Collected:</h4>
+            <div className="flex flex-wrap gap-1">
+              {collectedSkills.length === 0 ? (
+                <span className="pixel-text text-xs">No skills collected yet...</span>
+              ) : (
+                collectedSkills.map((skill, i) => (
+                  <span
+                    key={i}
+                    className="pixel-border pixel-text bg-accent text-accent-foreground text-xs px-2 py-1"
+                  >
+                    {skill}
+                  </span>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
