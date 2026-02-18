@@ -8,19 +8,23 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Light mode - Light version */
-  --background: #f5f5f5;
-  --foreground: #2d2d2d;
-  --card: #ffffff;
-  --card-foreground: #2d2d2d;
-  --accent: #5f052d;
-  --accent-foreground: #ffffff;
-  --border: #e0e0e0;
-  --muted: #e8e8e8;
-  --muted-foreground: #5f052d;
+  /* Light mode - warm beige palette */
+  --background: #F5F1E9;
+  /* Warm but higher-contrast foreground for light mode */
+  --foreground: #2f2720;
+  --card: #FDFBF6;
+  --card-foreground: #2f2720;
+  /* Warm beige accent for light mode */
+  --accent: #B8A37C;
+  /* Slightly softer text on beige */
+  --accent-foreground: #2b2418;
+  --border: #E0D6C5;
+  --muted: #E8E0D0;
+  /* Darker muted text for better readability on beige */
+  --muted-foreground: #5a4a38;
   --radius: 0.625rem;
   --particle-opacity: 0.4;
-  --particle-color: #5f052d;
+  --particle-color: #B8A37C;
 
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
@@ -48,15 +52,16 @@
 }
 
 .dark {
-  /* Dark mode - Josh W. Comeau inspired palette */
+  /* Dark mode - Josh W. Comeau inspired palette with beige accent */
   --background: #0d0f12;
   --foreground: #c7cacc;
   --card: #141820;
   --card-foreground: #c7cacc;
-  --accent: #5f052d;
-  --accent-foreground: #ffffff;
+  /* Slightly deeper beige accent for dark mode */
+  --accent: #B8A37C;
+  --accent-foreground: #120d07;
   --particle-opacity: 0.2;
-  --particle-color: #8b1538;
+  --particle-color: #B8A37C;
   --border: #2a2f3a;
   --muted: #1e2330;
   --muted-foreground: #0f1629;
@@ -172,13 +177,13 @@ section {
 
 /* Pixelated border style */
 .pixel-border {
-  border: 3px solid var(--foreground);
+  border: 3px solid var(--border);
 }
 
 /* Pixelated text */
 .pixel-text {
   font-family: "JetBrains Mono", "Courier New", monospace;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
 }
 
 /* Retro button - NO @apply, pure CSS */
@@ -186,9 +191,9 @@ section {
   padding: 0.5rem 1rem;
   background-color: var(--accent);
   color: var(--accent-foreground);
-  border: 2px solid var(--foreground);
+  border: 2px solid var(--border);
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   transition: all 0.1s;
   font-family: "JetBrains Mono", "Courier New", monospace;
 }
@@ -209,16 +214,16 @@ section {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: var(--accent);
-  border: 2px solid var(--foreground);
-  color: var(--accent-foreground);
+  background-color: var(--card);
+  border: 2px solid var(--border);
+  color: var(--foreground);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .sidebar-icon:hover {
-  background-color: var(--muted);
-  color: var(--foreground);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
   box-shadow: -2px -2px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -233,16 +238,16 @@ section {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background-color: var(--accent);
-  border: 2px solid var(--foreground);
-  color: var(--accent-foreground);
+  background-color: var(--card);
+  border: 2px solid var(--border);
+  color: var(--foreground);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .social-icon:hover {
-  background-color: var(--muted);
-  color: var(--foreground);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
   box-shadow: -3px -3px 0px rgba(0, 0, 0, 0.15);
 }
 

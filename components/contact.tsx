@@ -3,9 +3,13 @@
 import { useState } from "react"
 import { Mail, Github, Linkedin } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { useSound } from "@/hooks/use-sound"
+import { useSoundSettings } from "@/contexts/SoundContext"
 
 export default function Contact() {
   const { t } = useLanguage()
+  const { playClick } = useSound()
+  const { uiSoundEnabled } = useSoundSettings()
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
@@ -155,6 +159,11 @@ export default function Contact() {
               disabled={isSubmitting}
               className="retro-button pixel-text text-sm font-bold"
               style={{ alignSelf: "flex-start" }}
+              onClick={() => {
+                if (uiSoundEnabled) {
+                  playClick()
+                }
+              }}
             >
               {isSubmitting ? t.sending : t.sendButton}
             </button>
@@ -177,6 +186,11 @@ export default function Contact() {
               href="mailto:beajousama@gmail.com"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"
               style={{ padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              onClick={() => {
+                if (uiSoundEnabled) {
+                  playClick()
+                }
+              }}
             >
               <Mail size={16} />
               <span className="hidden sm:inline">{t.emailme}</span>
@@ -187,6 +201,11 @@ export default function Contact() {
               rel="noopener noreferrer"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"
               style={{ padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              onClick={() => {
+                if (uiSoundEnabled) {
+                  playClick()
+                }
+              }}
             >
               <Github size={16} />
               <span className="hidden sm:inline">GitHub</span>
@@ -197,6 +216,11 @@ export default function Contact() {
               rel="noopener noreferrer"
               className="pixel-border pixel-text text-xs font-bold bg-accent text-accent-foreground hover:opacity-80"
               style={{ padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem)", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              onClick={() => {
+                if (uiSoundEnabled) {
+                  playClick()
+                }
+              }}
             >
               <Linkedin size={16} />
               <span className="hidden sm:inline">LinkedIn</span>

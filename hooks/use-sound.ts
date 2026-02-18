@@ -83,7 +83,8 @@ export function useSound() {
 
   const playScrollTick = useCallback(() => {
     ensureContext()
-    playBeep({ frequency: 320, duration: 0.04, volume: 0.12, type: "square" })
+    // Very soft, high, mechanical tick to match rotating logo
+    playBeep({ frequency: 520, duration: 0.03, volume: 0.08, type: "triangle" })
   }, [ensureContext])
 
   return { playClick, playCollect, playGameOver, playWin, playScrollTick }

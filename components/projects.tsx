@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
+import { useSound } from "@/hooks/use-sound"
+import { useSoundSettings } from "@/contexts/SoundContext"
 import {
   Dialog,
   DialogContent,
@@ -17,6 +19,8 @@ export default function Projects() {
   const [currentVideo, setCurrentVideo] = useState("")
   const [currentProjectTitle, setCurrentProjectTitle] = useState("")
   const { t } = useLanguage()
+   const { playClick } = useSound()
+   const { uiSoundEnabled } = useSoundSettings()
 
   const projects = [
       {
@@ -28,7 +32,7 @@ export default function Projects() {
       link: "",
       github: "https://github.com/LeetSaaS-s/HyperTube-Frontend",
       demo: "https://youtu.be/N-ohDCg3ij0",
-      tags: ["web", "fullstack"],
+      tags: ["web"],
     },
     // add this project
     {
@@ -40,7 +44,7 @@ export default function Projects() {
       link: "https://portfolio-iota-eosin-89.vercel.app/",
       github: "https://github.com/BEAJousama/portfolio",
       demo: "",
-      tags: ["web", "fullstack"],
+      tags: ["web"],
     },
     {
       title: "Fleming.Watch",
@@ -50,7 +54,7 @@ export default function Projects() {
       type: "deployed",
       link: "https://fleming.watch",
       demo: "",
-      tags: ["web", "fullstack"],
+      tags: ["web"],
     },
     {
       title: "BeigePill.com",
@@ -60,7 +64,7 @@ export default function Projects() {
       type: "deployed",
       link: "https://beigepill.com",
       demo: "",
-      tags: ["web", "fullstack"],
+      tags: ["web"],
     },
     {
       title: "PongMasters",
@@ -71,7 +75,7 @@ export default function Projects() {
       link: "",
       github: "https://github.com/BEAJousama/ft_transcendence",
       demo: "https://youtu.be/sX8WaT4Rgtc",
-      tags: ["web", "fullstack", "networking"],
+      tags: ["web", "networking"],
     },
     {
       title: "WebServ",
@@ -109,7 +113,8 @@ export default function Projects() {
     }
   ]
 
-  const tags = ["all", "web", "fullstack", "networking", "systems", "low-level"]
+  // Simplified tags: "web" covers fullstack web work
+  const tags = ["all", "web", "networking", "systems", "low-level"]
 
   const filteredProjects = selectedTag === "all" 
     ? projects 
@@ -131,7 +136,12 @@ export default function Projects() {
           {tags.map((tag) => (
             <button
               key={tag}
-              onClick={() => setSelectedTag(tag)}
+              onClick={() => {
+                if (uiSoundEnabled) {
+                  playClick()
+                }
+                setSelectedTag(tag)
+              }}
               className={`pixel-border pixel-text text-xs font-bold transition-colors ${
                 selectedTag === tag 
                   ? "bg-accent text-accent-foreground" 
@@ -168,7 +178,12 @@ export default function Projects() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80"
+                        className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80 inline-flex items-center justify-center"
+                        onClick={() => {
+                          if (uiSoundEnabled) {
+                            playClick()
+                          }
+                        }}
                         style={{ padding: "0.25rem 0.75rem" }}
                       >
                         [CODE]
@@ -178,11 +193,16 @@ export default function Projects() {
                     {project.type === "deployed" && project.link && (
                       <div>
                         <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80"
-                        style={{ padding: "0.25rem 0.75rem" }}
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80 inline-flex items-center justify-center"
+                          onClick={() => {
+                            if (uiSoundEnabled) {
+                              playClick()
+                            }
+                          }}
+                          style={{ padding: "0.25rem 0.75rem" }}
                         >
                           [LIVE]
                         </a>
@@ -192,11 +212,14 @@ export default function Projects() {
                       <div>
                         <button
                           onClick={() => {
+                            if (uiSoundEnabled) {
+                              playClick()
+                            }
                             setCurrentVideo(project.demo)
                             setCurrentProjectTitle(project.title)
                             setVideoDialogOpen(true)
                           }}
-                          className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80"
+                          className="pixel-border pixel-text text-xs font-bold bg-foreground text-background hover:opacity-80 inline-flex items-center justify-center"
                           style={{ padding: "0.25rem 0.75rem" }}
                         >
                           [DEMO]
@@ -229,7 +252,17 @@ export default function Projects() {
         {filteredProjects.length > 3 && (
           <div className="flex justify-center mt-8">
             <button
-              onClick={() => setShowAll(!showAll)}
+              onClick={() => {
+                setShowAll((prev) => {
+                  const next = !prev
+                  // If we are collapsing the list, scroll back to the top of the section
+                  if (prev) {
+                    const section = document.getElementById("projects")
+                    section?.scrollIntoView({ behavior: "smooth", block: "start" })
+                  }
+                  return next
+                })
+              }}
               className="retro-button font-bold"
             >
               {showAll ? t.showLess : `${t.seeMoreProjects} (${filteredProjects.length - 3} ${t.more}`}
