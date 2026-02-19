@@ -14,12 +14,10 @@ export const metadata: Metadata = {
   generator: "v0.app",
   icons: {
     icon: [
-      {
-        url: "/logo.svg",
-        type: "image/svg+xml",
-      },
+      { url: "/obeaj.svg?v=2", type: "image/svg+xml" },
+      { url: "/obeaj.svg?v=2", type: "image/svg+xml", rel: "shortcut icon" },
     ],
-    apple: "/logo.svg",
+    apple: "/obeaj.svg?v=2",
   },
 }
 
