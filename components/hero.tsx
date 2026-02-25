@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useSound } from "@/hooks/use-sound"
 import { useSoundSettings } from "@/contexts/SoundContext"

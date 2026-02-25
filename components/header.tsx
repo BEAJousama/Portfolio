@@ -28,6 +28,8 @@ export default function Header() {
     { id: "contact", label: t.contact },
   ]
 
+  const blogLabel = language === "fr" ? "Blog" : "Blog"
+
   useEffect(() => {
     const handleScrollProgress = () => {
       const scrollTop = window.scrollY
@@ -183,6 +185,21 @@ export default function Header() {
                 &gt; {item.label}
               </button>
             ))}
+
+            {/* Blog link */}
+            <Link
+              href="/blog"
+              onClick={() => { if (uiSoundEnabled) playClick(); setMobileMenuOpen(false) }}
+              style={{ 
+                padding: "1rem 1.5rem",
+                transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
+                opacity: mobileMenuOpen ? 1 : 0,
+                transition: `all 0.4s ease-in-out ${navItems.length * 0.1}s`,
+              }}
+              className="block w-full text-left pixel-text text-lg md:text-sm font-bold md:transform-none! md:opacity-100! transition-all text-accent hover:bg-muted border-t-2 border-dashed border-border pt-4 md:border-t-0 md:pt-0"
+            >
+              &gt; {blogLabel} ✦
+            </Link>
           
             {/* Language Switcher - Mobile */}
             <div className="md:hidden pt-4 border-t-2 border-dashed border-foreground"

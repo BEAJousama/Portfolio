@@ -14,9 +14,7 @@
   --foreground: #2f2720;
   --card: #FDFBF6;
   --card-foreground: #2f2720;
-  /* Warm beige accent for light mode */
   --accent: #B8A37C;
-  /* Slightly softer text on beige */
   --accent-foreground: #2b2418;
   --border: #E0D6C5;
   --muted: #E8E0D0;
@@ -64,7 +62,7 @@
   --particle-color: #B8A37C;
   --border: #2a2f3a;
   --muted: #1e2330;
-  --muted-foreground: #0f1629;
+  --muted-foreground: #8892a4;
   --beige: #ffe0c5;
 
 }
@@ -129,7 +127,7 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: "JetBrains Mono", "Courier New", monospace;
-  font-weight: 300;
+  font-weight: 400;
   cursor: none;
   min-height: 100dvh;
   margin: 0;
