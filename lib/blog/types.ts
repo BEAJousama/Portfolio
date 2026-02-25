@@ -64,7 +64,10 @@ export interface Author {
 }
 
 export interface VideoDemo {
-  url: string
+  /** Direct link (YouTube, Vimeo, or .mp4/.webm URL) */
+  url?: string
+  /** Resolved URL when video is uploaded to Sanity */
+  fileUrl?: string
   caption?: string
 }
 

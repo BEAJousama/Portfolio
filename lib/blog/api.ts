@@ -7,7 +7,7 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-02-16"
 const token = process.env.SANITY_API_READ_TOKEN
 
-const hasSanityConfig = Boolean(
+export const hasSanityConfig = Boolean(
   projectId && dataset && projectId !== "your_project_id",
 )
 
@@ -32,7 +32,14 @@ const postFields = `
   tags,
   isFeatured,
   "coverImage": coverImage.asset->url,
-  videoDemo,
+  "videoDemo": select(
+    videoDemo == null => null,
+    {
+      "fileUrl": videoDemo.file.asset->url,
+      "url": videoDemo.url,
+      "caption": videoDemo.caption
+    }
+  ),
   body,
   "author": author->{
     _id,
@@ -83,7 +90,14 @@ const tutorialFields = `
   tags,
   isFeatured,
   "coverImage": coverImage.asset->url,
-  videoDemo,
+  "videoDemo": select(
+    videoDemo == null => null,
+    {
+      "fileUrl": videoDemo.file.asset->url,
+      "url": videoDemo.url,
+      "caption": videoDemo.caption
+    }
+  ),
   introduction,
   steps,
   conclusion,
@@ -175,14 +189,21 @@ function sanitizeTutorial(
   }
 }
 
-export async function getAllPosts(): Promise<{ posts: BlogPost[]; source: BlogSource }> {
-  if (!client) return { posts: mockPosts, source: "mock" }
+export async function getAllPosts(): Promise<{
+  posts: BlogPost[]
+  source: BlogSource
+  configMissing?: boolean
+}> {
+  if (!client) {
+    return { posts: mockPosts, source: "mock", configMissing: true }
+  }
 
   try {
     const posts = await client.fetch<BlogPost[]>(postsQuery)
     if (!posts?.length) return { posts: mockPosts, source: "mock" }
     return { posts: posts.map(sanitizePost), source: "sanity" }
-  } catch {
+  } catch (err) {
+    console.error("[Sanity] Failed to fetch posts:", err)
     return { posts: mockPosts, source: "mock" }
   }
 }

@@ -46,7 +46,7 @@ export default function BlogHeader() {
     }
   }, [uiSoundEnabled, playScrollTick])
 
-  const label = language === "fr" ? "Blog Obeaj" : "Obeaj Blog"
+  const label = "OB.log"
   const backLabel = language === "fr" ? "Retour Portfolio" : "Back to Portfolio"
 
   return (

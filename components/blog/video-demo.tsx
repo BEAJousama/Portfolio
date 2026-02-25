@@ -30,9 +30,32 @@ type Props = {
 }
 
 export default function VideoDemo({ video }: Props) {
-  if (!video?.url) return null
+  // Prefer uploaded file, then external URL
+  const sourceUrl = video?.fileUrl ?? video?.url
+  if (!sourceUrl) return null
 
-  const { type, embedUrl } = getEmbedUrl(video.url)
+  // Uploaded file: always use direct <video>
+  if (video.fileUrl) {
+    return (
+      <div className="my-8">
+        <div className="pixel-border overflow-hidden bg-card">
+          <video
+            src={video.fileUrl}
+            controls
+            className="w-full"
+            preload="metadata"
+          />
+        </div>
+        {video.caption && (
+          <p className="pixel-text mt-2 text-center text-xs text-muted-foreground">
+            {video.caption}
+          </p>
+        )}
+      </div>
+    )
+  }
+
+  const { type, embedUrl } = getEmbedUrl(video.url!)
 
   return (
     <div className="my-8">

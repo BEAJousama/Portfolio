@@ -3,6 +3,7 @@ import { structureTool } from "sanity/structure"
 import { visionTool } from "@sanity/vision"
 import { codeInput } from "@sanity/code-input"
 import { schemaTypes } from "./sanity/schemas"
+import { ImportMarkdownAction } from "./sanity/actions/import-markdown"
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!
@@ -35,5 +36,12 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, ctx) =>
+      ctx.schemaType === "post"
+        ? [ImportMarkdownAction, ...prev]
+        : prev,
   },
 })

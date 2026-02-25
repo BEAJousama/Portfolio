@@ -23,6 +23,11 @@
   --radius: 0.625rem;
   --particle-opacity: 0.4;
   --particle-color: #B8A37C;
+  /* Code blocks — base bg, border defines the block */
+  --code-bg: #F5F1E9;
+  --code-header-bg: #E8E0D0;
+  --code-fg: #2f2720;
+  --code-accent: #8B6B35;
 
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
@@ -64,6 +69,11 @@
   --muted: #1e2330;
   --muted-foreground: #8892a4;
   --beige: #ffe0c5;
+  /* Code blocks — deeper than page bg for clear separation */
+  --code-bg: #090c10;
+  --code-header-bg: #0d1117;
+  --code-fg: #c9d1d9;
+  --code-accent: #B8A37C;
 
 }
 

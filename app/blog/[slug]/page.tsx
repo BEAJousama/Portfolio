@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const { slug } = await params
   const { post } = await getPostBySlug(slug)
 
-  if (!post) return { title: "Post Not Found | Obeaj Blog" }
+  if (!post) return { title: "Post Not Found | OB.log" }
 
   return {
-    title: `${post.title} | Obeaj Blog`,
+    title: `${post.title} | OB.log`,
     description: post.seoDescription ?? post.excerpt,
   }
 }

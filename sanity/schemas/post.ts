@@ -73,14 +73,29 @@ export const postSchema = defineType({
       name: "videoDemo",
       title: "Video Demo",
       type: "object",
-      description: "Optional demo video shown at the top of the post (YouTube, Vimeo, or direct .mp4/.webm link).",
+      description: "Optional demo video: upload a file (recommended) or paste a YouTube/Vimeo/direct link.",
       fields: [
         defineField({
+          name: "file",
+          title: "Upload video",
+          type: "file",
+          options: {
+            accept: "video/*",
+            storeOriginalFilename: true,
+          },
+          description: "Upload an .mp4 or .webm file. Ignored if you set a URL below.",
+        }),
+        defineField({
           name: "url",
-          title: "Video URL",
+          title: "Or video URL",
           type: "url",
+          description: "YouTube, Vimeo, or direct .mp4/.webm link. Leave empty if you uploaded a file.",
           validation: (Rule) =>
-            Rule.uri({ scheme: ["http", "https"] }),
+            Rule.uri({ scheme: ["http", "https"] }).custom((url, ctx) => {
+              const file = (ctx.parent as { file?: { asset?: unknown } })?.file
+              if (url && file?.asset) return "Remove the uploaded file or clear the URL — use one or the other."
+              return true
+            }),
         }),
         defineField({
           name: "caption",

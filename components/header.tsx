@@ -28,7 +28,7 @@ export default function Header() {
     { id: "contact", label: t.contact },
   ]
 
-  const blogLabel = language === "fr" ? "Blog" : "Blog"
+  const blogLabel = "OB.log"
 
   useEffect(() => {
     const handleScrollProgress = () => {

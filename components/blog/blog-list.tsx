@@ -10,9 +10,10 @@ const POSTS_PER_PAGE = 5
 type BlogListProps = {
   posts: BlogPost[]
   isMock: boolean
+  configMissing?: boolean
 }
 
-export default function BlogList({ posts, isMock }: BlogListProps) {
+export default function BlogList({ posts, isMock, configMissing }: BlogListProps) {
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
 
@@ -60,11 +61,36 @@ export default function BlogList({ posts, isMock }: BlogListProps) {
         )}
       </div>
 
-      {/* Mock notice */}
+      {/* Mock / config notice */}
       {isMock && (
-        <p className="pixel-text mb-6 inline-block border-2 border-dashed border-border bg-card px-3 py-2 text-xs text-muted-foreground">
-          Showing starter posts — add Sanity env vars to load CMS articles.
-        </p>
+        <div className="pixel-text mb-6 border-2 border-dashed border-border bg-card px-4 py-3 text-xs text-muted-foreground">
+          {configMissing ? (
+            <>
+              <p className="font-semibold text-foreground mb-1">Sanity not configured</p>
+              <p className="mb-2">
+                Add to <code className="rounded bg-muted px-1">.env.local</code>:
+              </p>
+              <pre className="overflow-x-auto rounded bg-muted/80 px-2 py-1.5 text-[11px]">
+                {`NEXT_PUBLIC_SANITY_PROJECT_ID=your_actual_project_id
+NEXT_PUBLIC_SANITY_DATASET=production`}
+              </pre>
+              <p className="mt-2">
+                Use your real project ID from{" "}
+                <a
+                  href="https://sanity.io/manage"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent underline underline-offset-2 hover:opacity-80"
+                >
+                  sanity.io/manage
+                </a>
+                , then <strong>restart the dev server</strong> (<code>npm run dev</code>).
+              </p>
+            </>
+          ) : (
+            <p>Showing starter posts — no articles in Sanity or the request failed.</p>
+          )}
+        </div>
       )}
 
       {/* Results count when searching */}

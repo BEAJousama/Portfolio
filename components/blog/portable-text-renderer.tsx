@@ -3,6 +3,7 @@
 import { PortableText } from "@portabletext/react"
 import type { PortableTextBlock } from "@/lib/blog/types"
 import { slugify } from "@/lib/blog/toc"
+import CodeBlock from "@/components/blog/code-block"
 
 const components = {
   block: {
@@ -57,7 +58,10 @@ const components = {
     underline: ({ children }: any) => <span className="underline underline-offset-4">{children}</span>,
     "strike-through": ({ children }: any) => <span className="line-through opacity-60">{children}</span>,
     code: ({ children }: any) => (
-      <code className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[0.85em] text-accent">
+      <code
+        className="rounded border border-border px-1.5 py-0.5 font-mono text-[0.85em]"
+        style={{ background: "var(--code-bg)", color: "var(--code-fg)" }}
+      >
         {children}
       </code>
     ),
@@ -92,23 +96,11 @@ const components = {
       )
     },
     codeBlock: ({ value }: any) => (
-      <div className="my-6 overflow-hidden rounded border-2 border-border">
-        {(value.language || value.filename) && (
-          <div className="flex items-center justify-between border-b border-border bg-muted px-4 py-2">
-            {value.filename && (
-              <span className="pixel-text text-xs text-muted-foreground">{value.filename}</span>
-            )}
-            {value.language && (
-              <span className="ml-auto pixel-text text-xs uppercase tracking-widest text-accent">
-                {value.language}
-              </span>
-            )}
-          </div>
-        )}
-        <pre className="overflow-x-auto bg-card p-4 text-xs leading-6 md:text-sm">
-          <code className="font-mono text-foreground whitespace-pre">{value.code}</code>
-        </pre>
-      </div>
+      <CodeBlock
+        code={value.code ?? ""}
+        language={value.language}
+        filename={value.filename}
+      />
     ),
   },
 }

@@ -9,8 +9,8 @@ export const translations = {
     
     // Hero
     heroTitle: "Hi there",
-    heroDesc1: "I'm a Fullstack Software Engineer building fast, scalable web applications with Next.js, React, Node.js, and modern web technologies.",
-    heroDesc2: "I love solving real problems, writing clean code, and collaborating in fast-moving startup environments.",
+    heroDesc1: "Fullstack engineer building fast, polished web products — from database to pixel.",
+    heroDesc2: "I care about clean code, sharp UIs, and things that feel genuinely well-made.",
     viewProjects: "[ View Projects ]",
     getInTouch: "[ Get in Touch ]",
     downloadCV: "[ Download CV ]",
@@ -94,8 +94,8 @@ export const translations = {
     
     // Hero
     heroTitle: "Bonjour",
-    heroDesc1: "Je suis ingénieur Fullstack créant des applications web rapides et évolutives avec Next.js, React, Node.js et les technologies web modernes.",
-    heroDesc2: "J'adore résoudre de vrais problèmes, écrire du code propre et collaborer dans des environnements de startup dynamiques.",
+    heroDesc1: "Ingénieur fullstack, je construis des produits web rapides et soignés — du backend au pixel.",
+    heroDesc2: "Code propre, interfaces précises, et une vraie passion pour le travail bien fait.",
     viewProjects: "[ Voir Projets ]",
     getInTouch: "[ Me Contacter ]",
     downloadCV: "[ Télécharger CV ]",
