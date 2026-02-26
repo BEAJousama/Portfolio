@@ -4,6 +4,7 @@ import { useState, useMemo } from "react"
 import { Search, X, ChevronLeft, ChevronRight } from "lucide-react"
 import PostCard from "@/components/blog/post-card"
 import type { BlogPost } from "@/lib/blog/types"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 const POSTS_PER_PAGE = 5
 
@@ -14,6 +15,7 @@ type BlogListProps = {
 }
 
 export default function BlogList({ posts, isMock, configMissing }: BlogListProps) {
+  const { t } = useLanguage()
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
 
@@ -51,7 +53,7 @@ export default function BlogList({ posts, isMock, configMissing }: BlogListProps
           type="text"
           value={query}
           onChange={(e) => handleQuery(e.target.value)}
-          placeholder="Search by title, tag, or keyword…"
+          placeholder={t.blogSearchPlaceholder}
           className="pixel-text w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         {query && (
@@ -66,16 +68,16 @@ export default function BlogList({ posts, isMock, configMissing }: BlogListProps
         <div className="pixel-text mb-6 border-2 border-dashed border-border bg-card px-4 py-3 text-xs text-muted-foreground">
           {configMissing ? (
             <>
-              <p className="font-semibold text-foreground mb-1">Sanity not configured</p>
+              <p className="font-semibold text-foreground mb-1">{t.blogSanityNotConfigured}</p>
               <p className="mb-2">
-                Add to <code className="rounded bg-muted px-1">.env.local</code>:
+                {t.blogSanityAddEnv}{" "}
+                <code className="rounded bg-muted px-1">{t.blogSanityEnvFile}</code>:
               </p>
               <pre className="overflow-x-auto rounded bg-muted/80 px-2 py-1.5 text-[11px]">
                 {`NEXT_PUBLIC_SANITY_PROJECT_ID=your_actual_project_id
 NEXT_PUBLIC_SANITY_DATASET=production`}
               </pre>
               <p className="mt-2">
-                Use your real project ID from{" "}
                 <a
                   href="https://sanity.io/manage"
                   target="_blank"
@@ -84,11 +86,11 @@ NEXT_PUBLIC_SANITY_DATASET=production`}
                 >
                   sanity.io/manage
                 </a>
-                , then <strong>restart the dev server</strong> (<code>npm run dev</code>).
+                . {t.blogSanityRestart}
               </p>
             </>
           ) : (
-            <p>Showing starter posts — no articles in Sanity or the request failed.</p>
+            <p>{t.blogShowingStarter}</p>
           )}
         </div>
       )}
@@ -97,8 +99,10 @@ NEXT_PUBLIC_SANITY_DATASET=production`}
       {query && (
         <p className="pixel-text mb-4 text-xs text-muted-foreground">
           {filtered.length === 0
-            ? "No articles found."
-            : `${filtered.length} article${filtered.length === 1 ? "" : "s"} found`}
+            ? t.blogNoArticlesFound
+            : filtered.length === 1
+              ? `1 ${t.blogArticleFound}`
+              : `${filtered.length} ${t.blogArticlesFound}`}
         </p>
       )}
 
@@ -111,12 +115,12 @@ NEXT_PUBLIC_SANITY_DATASET=production`}
         </section>
       ) : (
         <section className="pixel-border bg-card p-8 text-center">
-          <p className="pixel-text text-sm text-muted-foreground">No articles match your search.</p>
+          <p className="pixel-text text-sm text-muted-foreground">{t.blogNoMatch}</p>
           <button
             onClick={() => handleQuery("")}
             className="retro-button mt-4 inline-flex text-xs font-semibold"
           >
-            [ Clear Search ]
+            {t.blogClearSearch}
           </button>
         </section>
       )}
@@ -128,7 +132,7 @@ NEXT_PUBLIC_SANITY_DATASET=production`}
             onClick={() => handlePage(safePage - 1)}
             disabled={safePage === 1}
             className="sidebar-icon h-10 w-10 disabled:opacity-30"
-            title="Previous page"
+            title={t.blogPrevPage}
           >
             <ChevronLeft size={18} />
           </button>
@@ -153,7 +157,7 @@ NEXT_PUBLIC_SANITY_DATASET=production`}
             onClick={() => handlePage(safePage + 1)}
             disabled={safePage === totalPages}
             className="sidebar-icon h-10 w-10 disabled:opacity-30"
-            title="Next page"
+            title={t.blogNextPage}
           >
             <ChevronRight size={18} />
           </button>

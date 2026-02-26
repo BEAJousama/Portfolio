@@ -83,6 +83,24 @@ export const translations = {
     
     // Role
     role: "Fullstack Dev",
+
+    // Blog (page UI only)
+    blogTitle: "OB.log",
+    blogSubtitle: "Engineering notes, lessons from real projects, and behind-the-scenes decisions from building performant fullstack products.",
+    blogSearchPlaceholder: "Search by title, tag, or keyword…",
+    blogSanityNotConfigured: "Sanity not configured",
+    blogSanityAddEnv: "Add to",
+    blogSanityEnvFile: ".env.local",
+    blogSanityRestart: "Use your real project ID from sanity.io/manage, then restart the dev server (npm run dev).",
+    blogShowingStarter: "Showing starter posts — no articles in Sanity or the request failed.",
+    blogNoArticlesFound: "No articles found.",
+    blogArticleFound: "article found",
+    blogArticlesFound: "articles found",
+    blogNoMatch: "No articles match your search.",
+    blogClearSearch: "[ Clear Search ]",
+    blogPrevPage: "Previous page",
+    blogNextPage: "Next page",
+    blogBackToPortfolio: "Back to Portfolio",
   },
   fr: {
     // Navigation
@@ -168,6 +186,24 @@ export const translations = {
     
     // Role
     role: "Dév Fullstack",
+
+    // Blog (page UI only)
+    blogTitle: "OB.log",
+    blogSubtitle: "Notes d'ingénierie, retours de projets réels et décisions derrière les produits fullstack performants.",
+    blogSearchPlaceholder: "Rechercher par titre, tag ou mot-clé…",
+    blogSanityNotConfigured: "Sanity non configuré",
+    blogSanityAddEnv: "Ajoutez dans",
+    blogSanityEnvFile: ".env.local",
+    blogSanityRestart: "Utilisez votre project ID depuis sanity.io/manage, puis redémarrez le serveur (npm run dev).",
+    blogShowingStarter: "Articles de démo — aucun article dans Sanity ou la requête a échoué.",
+    blogNoArticlesFound: "Aucun article trouvé.",
+    blogArticleFound: "article trouvé",
+    blogArticlesFound: "articles trouvés",
+    blogNoMatch: "Aucun article ne correspond à votre recherche.",
+    blogClearSearch: "[ Effacer ]",
+    blogPrevPage: "Page précédente",
+    blogNextPage: "Page suivante",
+    blogBackToPortfolio: "Retour au Portfolio",
   },
 }
 

@@ -2,10 +2,13 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import GoogleAnalytics from "@/components/analytics/google-analytics"
 import "./globals.css"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
+
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 
 export const metadata: Metadata = {
   title: "Beaj Ousama – Fullstack Software Engineer",
@@ -19,6 +22,13 @@ export const metadata: Metadata = {
     ],
     apple: "/obeaj.svg?v=2",
   },
+  ...(googleSiteVerification && {
+    verification: {
+      other: {
+        "google-site-verification": googleSiteVerification,
+      },
+    },
+  }),
 }
 
 export default function RootLayout({
@@ -30,6 +40,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geist.variable} ${geistMono.variable} font-sans antialiased`}>
         {children}
+        <GoogleAnalytics />
         <Analytics />
       </body>
     </html>

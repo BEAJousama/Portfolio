@@ -10,7 +10,7 @@ import { useSoundSettings } from "@/contexts/SoundContext"
 
 export default function BlogHeader() {
   const { theme, toggleTheme } = useTheme()
-  const { language, setLanguage } = useLanguage()
+  const { language, setLanguage, t } = useLanguage()
   const { uiSoundEnabled, toggleUiSound } = useSoundSettings()
   const { playClick, playScrollTick } = useSound()
   const rotatingGroupRef = useRef<SVGGElement>(null)
@@ -46,8 +46,8 @@ export default function BlogHeader() {
     }
   }, [uiSoundEnabled, playScrollTick])
 
-  const label = "OB.log"
-  const backLabel = language === "fr" ? "Retour Portfolio" : "Back to Portfolio"
+  const label = t.blogTitle
+  const backLabel = t.blogBackToPortfolio
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b-4 border-foreground bg-background/95 backdrop-blur">
