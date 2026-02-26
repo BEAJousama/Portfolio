@@ -101,6 +101,7 @@ export const translations = {
     blogPrevPage: "Previous page",
     blogNextPage: "Next page",
     blogBackToPortfolio: "Back to Portfolio",
+    blogBackToBlog: "Back to blog",
   },
   fr: {
     // Navigation
@@ -204,6 +205,7 @@ export const translations = {
     blogPrevPage: "Page précédente",
     blogNextPage: "Page suivante",
     blogBackToPortfolio: "Retour au Portfolio",
+    blogBackToBlog: "Retour au blog",
   },
 }
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Moon, Sun, Volume2, VolumeX } from "lucide-react"
 import { useTheme } from "@/contexts/ThemeContext"
 import { useLanguage } from "@/contexts/LanguageContext"
@@ -46,8 +47,11 @@ export default function BlogHeader() {
     }
   }, [uiSoundEnabled, playScrollTick])
 
+  const pathname = usePathname()
+  const isBlogPost = pathname?.startsWith("/blog/") && pathname !== "/blog"
+  const backHref = isBlogPost ? "/blog" : "/"
+  const backLabel = isBlogPost ? t.blogBackToBlog : t.blogBackToPortfolio
   const label = t.blogTitle
-  const backLabel = t.blogBackToPortfolio
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b-4 border-foreground bg-background/95 backdrop-blur">
@@ -55,7 +59,7 @@ export default function BlogHeader() {
         <div className="flex items-center gap-3">
           {/* Animated logo as back button */}
           <Link
-            href="/"
+            href={backHref}
             className="flex h-16 w-16 items-center justify-center"
             title={backLabel}
             onClick={() => { if (uiSoundEnabled) playClick() }}
@@ -72,7 +76,7 @@ export default function BlogHeader() {
           <div>
             <p className="game-title text-sm md:text-base">{label}</p>
             <Link
-              href="/"
+              href={backHref}
               className="pixel-text text-xs text-muted-foreground hover:text-accent"
               onClick={() => { if (uiSoundEnabled) playClick() }}
             >
