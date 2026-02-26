@@ -32,6 +32,12 @@ const postFields = `
   tags,
   isFeatured,
   "coverImage": coverImage.asset->url,
+  "liveDemo": liveDemo{
+    url,
+    label,
+    codeUrl,
+    codeLabel
+  },
   "videoDemo": select(
     videoDemo == null => null,
     {
@@ -153,6 +159,7 @@ function sanitizePost(
     tags: Array.isArray(post.tags) ? post.tags : [],
     coverImage: post.coverImage,
     videoDemo: post.videoDemo,
+    liveDemo: post.liveDemo,
     body: Array.isArray(post.body) ? post.body : [],
     isFeatured: post.isFeatured,
     seoTitle: post.seoTitle,

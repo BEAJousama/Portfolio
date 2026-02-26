@@ -71,6 +71,13 @@ export interface VideoDemo {
   caption?: string
 }
 
+export interface LiveDemo {
+  url: string
+  label?: string
+  codeUrl?: string
+  codeLabel?: string
+}
+
 export interface BlogPost {
   _id: string
   title: string
@@ -85,6 +92,7 @@ export interface BlogPost {
   coverImage?: string
   body: PortableTextBlock[]
   videoDemo?: VideoDemo
+  liveDemo?: LiveDemo
   isFeatured?: boolean
   seoTitle?: string
   seoDescription?: string

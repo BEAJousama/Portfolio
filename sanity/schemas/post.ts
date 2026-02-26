@@ -71,6 +71,40 @@ export const postSchema = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "liveDemo",
+      title: "Live Demo",
+      type: "object",
+      description: "Optional link to a live demo or deployed app for this post.",
+      fields: [
+        defineField({
+          name: "url",
+          title: "Demo URL",
+          type: "url",
+          validation: (Rule) =>
+            Rule.uri({ scheme: ["http", "https"] }),
+        }),
+        defineField({
+          name: "label",
+          title: "Button Label",
+          type: "string",
+          description: "Optional button text. Defaults to “View live demo”.",
+        }),
+        defineField({
+          name: "codeUrl",
+          title: "Code Repository URL",
+          type: "url",
+          description: "Optional link to the GitHub (or other) repo for this demo.",
+          validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
+        }),
+        defineField({
+          name: "codeLabel",
+          title: "Code Button Label",
+          type: "string",
+          description: "Optional button text for the code link. Defaults to “View source code”.",
+        }),
+      ],
+    }),
+    defineField({
       name: "videoDemo",
       title: "Video Demo",
       type: "object",

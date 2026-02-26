@@ -87,6 +87,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.excerpt}
         </p>
 
+        {/* ── Live Demo / Code CTA ── */}
+        {(post.liveDemo?.url || post.liveDemo?.codeUrl) && (
+          <div className="mb-8 flex flex-wrap gap-3">
+            {post.liveDemo?.url && (
+              <a
+                href={post.liveDemo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="retro-button inline-flex items-center gap-2 text-xs md:text-sm font-bold"
+              >
+                <span>{post.liveDemo.label || "View live demo"}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
+            {post.liveDemo?.codeUrl && (
+              <a
+                href={post.liveDemo.codeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pixel-border inline-flex items-center gap-2 border-2 border-border bg-muted px-3 py-2 text-xs md:text-sm font-bold text-foreground hover:border-accent hover:text-accent"
+              >
+                <span>{post.liveDemo.codeLabel || "View source code"}</span>
+                <span aria-hidden="true">&lt;/&gt;</span>
+              </a>
+            )}
+          </div>
+        )}
+
         {/* ── Tags ── */}
         {post.tags.length > 0 && (
           <div className="mb-8 flex flex-wrap gap-2">
@@ -103,7 +131,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}
 
         {/* ── Video Demo ── */}
-        {post.videoDemo?.url && <VideoDemo video={post.videoDemo} />}
+        {post.videoDemo && <VideoDemo video={post.videoDemo} />}
 
         {/* ── Body ── */}
         <PortableTextRenderer body={post.body} />
