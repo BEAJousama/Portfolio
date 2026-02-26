@@ -24,18 +24,21 @@ const LANG_MAP: Record<string, string> = {
 }
 
 // Warm beige theme for light mode — same palette as the portfolio
+// Use backgroundColor only (no background) to avoid React style conflict with react-syntax-highlighter
 const warmBeige: Record<string, React.CSSProperties> = {
   ...vs,
   'pre[class*="language-"]': {
     ...((vs as any)['pre[class*="language-"]'] ?? {}),
-    background: "var(--code-bg)",
+    background: undefined,
+    backgroundColor: "var(--code-bg)",
     margin: 0,
     padding: "1rem",
     overflow: "auto",
   },
   'code[class*="language-"]': {
     ...((vs as any)['code[class*="language-"]'] ?? {}),
-    background: "transparent",
+    background: undefined,
+    backgroundColor: "transparent",
     color: "var(--code-fg)",
     fontFamily: '"JetBrains Mono", "Fira Code", monospace',
   },
@@ -45,14 +48,16 @@ const darkTheme: Record<string, React.CSSProperties> = {
   ...vscDarkPlus,
   'pre[class*="language-"]': {
     ...((vscDarkPlus as any)['pre[class*="language-"]'] ?? {}),
-    background: "var(--code-bg)",
+    background: undefined,
+    backgroundColor: "var(--code-bg)",
     margin: 0,
     padding: "1rem",
     overflow: "auto",
   },
   'code[class*="language-"]': {
     ...((vscDarkPlus as any)['code[class*="language-"]'] ?? {}),
-    background: "transparent",
+    background: undefined,
+    backgroundColor: "transparent",
     fontFamily: '"JetBrains Mono", "Fira Code", monospace',
   },
 }
@@ -106,7 +111,7 @@ export default function CodeBlock({ code, language = "text", filename }: Props) 
         style={activeTheme}
         customStyle={{
           margin: 0,
-          background: "var(--code-bg)",
+          backgroundColor: "var(--code-bg)",
           fontSize: "0.8rem",
           lineHeight: "1.65",
         }}

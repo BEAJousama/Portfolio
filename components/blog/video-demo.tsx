@@ -1,5 +1,6 @@
 "use client"
 
+import { useRef, useEffect } from "react"
 import type { VideoDemo as VideoDemoType } from "@/lib/blog/types"
 
 function getEmbedUrl(url: string): { type: "youtube" | "vimeo" | "direct" | "unknown"; embedUrl: string } {
@@ -37,37 +38,22 @@ export default function VideoDemo({ video }: Props) {
   // Uploaded file: always use direct <video>
   if (video.fileUrl) {
     return (
-      <div className="my-8">
-        <div className="pixel-border overflow-hidden bg-card">
-          <video
-            src={video.fileUrl}
-            controls
-            className="w-full"
-            preload="metadata"
-          />
-        </div>
-        {video.caption && (
-          <p className="pixel-text mt-2 text-center text-xs text-muted-foreground">
-            {video.caption}
-          </p>
-        )}
-      </div>
+      <VideoPlayer src={video.fileUrl} caption={video.caption} />
     )
   }
 
   const { type, embedUrl } = getEmbedUrl(video.url!)
 
+  if (type === "direct") {
+    return (
+      <VideoPlayer src={embedUrl} caption={video.caption} />
+    )
+  }
+
   return (
     <div className="my-8">
-      <div className="pixel-border overflow-hidden bg-card">
-        {type === "direct" ? (
-          <video
-            src={embedUrl}
-            controls
-            className="w-full"
-            preload="metadata"
-          />
-        ) : type === "youtube" || type === "vimeo" ? (
+      {type === "youtube" || type === "vimeo" ? (
+        <div className="pixel-border overflow-hidden bg-card">
           <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
             <iframe
               src={embedUrl}
@@ -77,8 +63,9 @@ export default function VideoDemo({ video }: Props) {
               className="absolute inset-0 h-full w-full border-0"
             />
           </div>
-        ) : (
-          // Fallback: unknown URL format — just link it
+        </div>
+      ) : (
+        <div className="pixel-border overflow-hidden bg-card">
           <div className="p-4">
             <a
               href={video.url}
@@ -89,11 +76,47 @@ export default function VideoDemo({ video }: Props) {
               ▶ Watch demo video
             </a>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {video.caption && (
         <p className="pixel-text mt-2 text-center text-xs text-muted-foreground">
           {video.caption}
+        </p>
+      )}
+    </div>
+  )
+}
+
+function VideoPlayer({ src, caption }: { src: string; caption?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const el = videoRef.current
+    if (!el) return
+    el.muted = true
+    const play = () => el.play().catch(() => {})
+    play()
+    el.addEventListener("loadeddata", play)
+    return () => el.removeEventListener("loadeddata", play)
+  }, [src])
+
+  return (
+    <div className="my-8">
+      <div className="pixel-border overflow-hidden bg-card">
+        <video
+          ref={videoRef}
+          src={src}
+          className="w-full"
+          preload="auto"
+          loop
+          muted
+          playsInline
+          autoPlay
+        />
+      </div>
+      {caption && (
+        <p className="pixel-text mt-2 text-center text-xs text-muted-foreground">
+          {caption}
         </p>
       )}
     </div>

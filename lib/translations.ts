@@ -82,7 +82,7 @@ export const translations = {
     emailme: "Email",
     
     // Role
-    role: "Fullstack Dev",
+    role: "Fullstack Engineer",
 
     // Blog (page UI only)
     blogTitle: "OB.log",
@@ -186,7 +186,7 @@ export const translations = {
     emailme: "Email",
     
     // Role
-    role: "Dév Fullstack",
+    role: "Ingénieur Fullstack",
 
     // Blog (page UI only)
     blogTitle: "OB.log",

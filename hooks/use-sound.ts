@@ -85,7 +85,7 @@ export function useSound() {
   const playScrollTick = useCallback(() => {
     ensureContext()
     // Extremely soft, subtle tick for scroll – below music level
-    playBeep({ frequency: 420, duration: 0.025, volume: 0.0035, type: "sine" })
+    playBeep({ frequency: 200, duration: 0.015, volume: 0.003, type: "sine" })
   }, [ensureContext])
 
   return { playClick, playCollect, playGameOver, playWin, playScrollTick }

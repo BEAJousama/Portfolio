@@ -182,7 +182,7 @@ export default function Header() {
                     : "text-foreground hover:text-accent hover:bg-muted"
                 }`}
               >
-                &gt; {item.label}
+                {item.label}
               </button>
             ))}
 
