@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity"
+import BlockquoteStyle from "@/sanity/components/blockquote-style"
 
 export const postSchema = defineType({
   name: "post",
@@ -117,7 +118,7 @@ export const postSchema = defineType({
             { title: "H2", value: "h2" },
             { title: "H3", value: "h3" },
             { title: "H4", value: "h4" },
-            { title: "Quote", value: "blockquote" },
+            { title: "Quote", value: "blockquote", component: BlockquoteStyle },
           ],
           lists: [
             { title: "Bullet", value: "bullet" },
