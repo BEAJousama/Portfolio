@@ -15,6 +15,9 @@ export default function Header() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const lastScrollBucketRef = useRef<number | null>(null)
+  const headerBarRef = useRef<HTMLDivElement>(null)
+  const [headerBarHeight, setHeaderBarHeight] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const { language, setLanguage, t } = useLanguage()
   const { theme, toggleTheme } = useTheme()
   const { playClick, playScrollTick } = useSound()
@@ -29,6 +32,34 @@ export default function Header() {
   ]
 
   const blogLabel = "OB.log"
+
+  useEffect(() => {
+    const el = headerBarRef.current
+    if (!el) return
+    const measure = () => setHeaderBarHeight(el.getBoundingClientRect().height)
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)")
+    const handler = () => setIsMobile(mql.matches)
+    handler()
+    mql.addEventListener("change", handler)
+    return () => mql.removeEventListener("change", handler)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile && mobileMenuOpen) {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = "hidden"
+      return () => {
+        document.body.style.overflow = prev
+      }
+    }
+  }, [isMobile, mobileMenuOpen])
 
   useEffect(() => {
     const handleScrollProgress = () => {
@@ -116,6 +147,7 @@ export default function Header() {
         style={{ padding: 0 }}
       >
         <div
+          ref={headerBarRef}
           className="flex items-center border-b-4 border-foreground md:border-b-0 md:flex-col md:items-start md:gap-8"
           style={{ padding: "1rem" }}
         >
@@ -158,25 +190,30 @@ export default function Header() {
           className={`md:block fixed md:relative left-0 right-0 md:inset-auto bg-background md:bg-transparent z-40 md:z-auto border-t-4 md:border-t-0 border-foreground transition-all duration-500 ease-in-out ${
             mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto"
           }`}
-          style={{ 
-            padding: "1rem",
-            top: mobileMenuOpen ? "80px" : "-100%",
-            bottom: mobileMenuOpen ? "0" : "auto",
-            ...(mobileMenuOpen ? {} : { top: "auto" })
-          }}
+          style={isMobile
+            ? {
+                padding: "0.75rem 1rem",
+                top: headerBarHeight,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                transform: mobileMenuOpen ? "translateY(0)" : "translateY(-100%)",
+              }
+            : { padding: "1rem" }
+          }
         >
-          <div className="flex flex-col h-full md:h-auto justify-center md:justify-start space-y-6">
+          <div className="flex flex-col h-full md:h-auto justify-start md:justify-start gap-1.5 md:gap-0 md:space-y-6">
             {navItems.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => handleScroll(item.id)}
                 style={{ 
-                  padding: "1rem 1.5rem",
+                  padding: isMobile ? "0.5rem 0.75rem" : "1rem 1.5rem",
                   transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
                   opacity: mobileMenuOpen ? 1 : 0,
                   transition: `all 0.4s ease-in-out ${index * 0.1}s`,
                 }}
-                className={`block w-full text-left pixel-text text-lg md:text-sm font-bold md:transform-none! md:opacity-100! transition-all ${
+                className={`block w-full text-left pixel-text text-base md:text-sm font-bold md:transform-none! md:opacity-100! transition-all ${
                   activeSection === item.id 
                     ? "bg-accent text-accent-foreground pixel-border" 
                     : "text-foreground hover:text-accent hover:bg-muted"
@@ -191,25 +228,25 @@ export default function Header() {
               href="/blog"
               onClick={() => { if (uiSoundEnabled) playClick(); setMobileMenuOpen(false) }}
               style={{ 
-                padding: "1rem 1.5rem",
+                padding: isMobile ? "0.5rem 0.75rem" : "1rem 1.5rem",
                 transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
                 opacity: mobileMenuOpen ? 1 : 0,
                 transition: `all 0.4s ease-in-out ${navItems.length * 0.1}s`,
               }}
-              className="block w-full text-left pixel-text text-lg md:text-sm font-bold md:transform-none! md:opacity-100! transition-all text-accent hover:bg-muted border-t-2 border-dashed border-border pt-4 md:border-t-0 md:pt-0"
+              className="block w-full text-left pixel-text text-base md:text-sm font-bold md:transform-none! md:opacity-100! transition-all text-accent hover:bg-muted border-t-2 border-dashed border-border pt-2 mt-1 md:border-t-0 md:pt-0 md:mt-0"
             >
               &gt; {blogLabel} ✦
             </Link>
           
             {/* Language Switcher - Mobile */}
-            <div className="md:hidden pt-4 border-t-2 border-dashed border-foreground"
+            <div className="md:hidden pt-2 border-t-2 border-dashed border-foreground"
               style={{ 
                 transform: mobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
                 opacity: mobileMenuOpen ? 1 : 0,
                 transition: `all 0.4s ease-in-out ${navItems.length * 0.1}s`,
               }}
             >
-              <div className="flex gap-2 mb-4">
+              <div className="flex gap-2 mb-2">
                 <button
                   onClick={() => {
                     if (uiSoundEnabled) {
@@ -263,7 +300,7 @@ export default function Header() {
                   }
                   toggleUiSound()
                 }}
-                className="w-full mt-2 pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors flex items-center justify-between"
+                className="w-full mt-1.5 pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors flex items-center justify-between"
                 style={{ padding: "0.75rem" }}
               >
                 <span>Sound & music</span>
