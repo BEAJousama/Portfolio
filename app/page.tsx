@@ -6,6 +6,7 @@ import LoadingScreen from "@/components/loading-screen"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 import { ThemeProvider } from "@/contexts/ThemeContext"
 import { SoundProvider } from "@/contexts/SoundContext"
+import BackgroundMusic from "@/components/background-music"
 
 // Dynamically import all components with no SSR to prevent flash
 const Header = dynamic(() => import("@/components/header"), { ssr: false })
@@ -88,6 +89,7 @@ export default function Home() {
           <div className="min-h-dvh bg-background text-foreground" style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.3s ease' }}>
             <ParticlesBackground />
             <CustomCursor />
+            <BackgroundMusic />
             <Header />
             <main style={{ position: "relative", zIndex: 1 }}>
               <Hero />

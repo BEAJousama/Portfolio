@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { useSound } from "@/hooks/use-sound"
+import { useSoundSettings } from "@/contexts/SoundContext"
 
 const GRID_SIZE = 20
 const CELL_SIZE = 20
@@ -46,6 +47,7 @@ const getSkillIconUrl = (skill: string): string => {
 export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { t } = useLanguage()
   const { playClick, playCollect, playGameOver, playWin } = useSound()
+  const { uiSoundEnabled } = useSoundSettings()
   const [snake, setSnake] = useState<Position[]>(INITIAL_SNAKE)
   const [direction, setDirection] = useState<Direction>(INITIAL_DIRECTION)
   const [food, setFood] = useState<Position & { skill: string }>({ x: 15, y: 15, skill: ALL_SKILLS[0] })
@@ -107,7 +109,9 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
 
       // Check collision with self
       if (prevSnake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
-        playGameOver()
+        if (uiSoundEnabled) {
+          playGameOver()
+        }
         setGameOver(true)
         setIsPlaying(false)
         return prevSnake
@@ -131,11 +135,15 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
         }, 2000)
 
         // Play collect sound
-        playCollect()
+        if (uiSoundEnabled) {
+          playCollect()
+        }
         
         // Check win condition
         if (newCollected.length === ALL_SKILLS.length) {
-          playWin()
+          if (uiSoundEnabled) {
+            playWin()
+          }
           setGameWon(true)
           setIsPlaying(false)
           return newSnake
@@ -342,7 +350,9 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
               <div></div>
               <button
                 onClick={() => {
-                  playClick()
+                  if (uiSoundEnabled) {
+                    playClick()
+                  }
                   handleDirectionChange({ x: 0, y: -1 })
                 }}
                 className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
@@ -353,7 +363,9 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
               <div></div>
               <button
                 onClick={() => {
-                  playClick()
+                  if (uiSoundEnabled) {
+                    playClick()
+                  }
                   handleDirectionChange({ x: -1, y: 0 })
                 }}
                 className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
@@ -363,7 +375,9 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
               </button>
               <button
                 onClick={() => {
-                  playClick()
+                  if (uiSoundEnabled) {
+                    playClick()
+                  }
                   handleDirectionChange({ x: 0, y: 1 })
                 }}
                 className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"
@@ -373,7 +387,9 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
               </button>
               <button
                 onClick={() => {
-                  playClick()
+                  if (uiSoundEnabled) {
+                    playClick()
+                  }
                   handleDirectionChange({ x: 1, y: 0 })
                 }}
                 className="pixel-border bg-accent text-accent-foreground hover:bg-muted transition-colors p-3 flex items-center justify-center"

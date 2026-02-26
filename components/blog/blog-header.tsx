@@ -103,7 +103,7 @@ export default function BlogHeader() {
           <button
             onClick={() => { if (uiSoundEnabled) playClick(); toggleUiSound() }}
             className="sidebar-icon h-10 w-10"
-            title="Toggle UI sounds"
+            title="Toggle sound & music"
           >
             {uiSoundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
           </button>

@@ -56,35 +56,36 @@ export function useSound() {
 
   const playClick = useCallback(() => {
     ensureContext()
-    playBeep({ frequency: 220, duration: 0.06, volume: 0.15, type: "square" })
+    // Very soft, smooth click (quieter than background music)
+    playBeep({ frequency: 320, duration: 0.05, volume: 0.01, type: "sine" })
   }, [ensureContext])
 
   const playCollect = useCallback(() => {
     ensureContext()
-    playBeep({ frequency: 660, duration: 0.12, volume: 0.2, type: "triangle" })
+    playBeep({ frequency: 660, duration: 0.12, volume: 0.01, type: "triangle" })
   }, [ensureContext])
 
   const playGameOver = useCallback(() => {
     ensureContext()
     // Two quick descending beeps
-    playBeep({ frequency: 260, duration: 0.12, volume: 0.2, type: "sawtooth" })
+    playBeep({ frequency: 260, duration: 0.12, volume: 0.03, type: "sawtooth" })
     setTimeout(() => {
-      playBeep({ frequency: 180, duration: 0.18, volume: 0.18, type: "sawtooth" })
+      playBeep({ frequency: 180, duration: 0.18, volume: 0.025, type: "sawtooth" })
     }, 120)
   }, [ensureContext])
 
   const playWin = useCallback(() => {
     ensureContext()
     // Simple ascending "win" chirp
-    playBeep({ frequency: 400, duration: 0.1, volume: 0.18, type: "triangle" })
-    setTimeout(() => playBeep({ frequency: 520, duration: 0.1, volume: 0.18, type: "triangle" }), 100)
-    setTimeout(() => playBeep({ frequency: 660, duration: 0.16, volume: 0.18, type: "triangle" }), 200)
+    playBeep({ frequency: 400, duration: 0.1, volume: 0.025, type: "triangle" })
+    setTimeout(() => playBeep({ frequency: 520, duration: 0.1, volume: 0.025, type: "triangle" }), 100)
+    setTimeout(() => playBeep({ frequency: 660, duration: 0.16, volume: 0.025, type: "triangle" }), 200)
   }, [ensureContext])
 
   const playScrollTick = useCallback(() => {
     ensureContext()
-    // Very soft, high, mechanical tick to match rotating logo
-    playBeep({ frequency: 520, duration: 0.03, volume: 0.08, type: "triangle" })
+    // Extremely soft, subtle tick for scroll – below music level
+    playBeep({ frequency: 420, duration: 0.025, volume: 0.0035, type: "sine" })
   }, [ensureContext])
 
   return { playClick, playCollect, playGameOver, playWin, playScrollTick }

@@ -266,7 +266,7 @@ export default function Header() {
                 className="w-full mt-2 pixel-border pixel-text text-sm font-bold bg-card text-foreground hover:bg-muted transition-colors flex items-center justify-between"
                 style={{ padding: "0.75rem" }}
               >
-                <span>UI sounds</span>
+                <span>Sound & music</span>
                 {uiSoundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
               </button>
             </div>
@@ -454,9 +454,6 @@ export default function Header() {
                   <span>{uiSoundEnabled ? "On" : "Off"}</span>
                   {uiSoundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
                 </button>
-                <p className="pixel-text text-[0.6rem] mt-1 opacity-70">
-                  (Snake game sounds stay on even when UI sounds are muted.)
-                </p>
               </div>
             </div>
           </div>
