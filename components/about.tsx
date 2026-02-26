@@ -30,23 +30,6 @@ export default function About() {
                   <p className="pixel-text text-sm">{t.exp1}</p>
                   <p className="pixel-text text-sm">{t.exp2}</p>
                   <p className="pixel-text text-sm">{t.exp3}</p>
-                  <p className="pixel-text text-sm">{t.exp4}</p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Occitaline Experience */}
-            <div style={{ gap: "0.75rem", display: "flex", flexDirection: "column" }}>
-              <div>
-                <p className="pixel-text font-bold text-foreground">{t.embeddedEngineer}</p>
-                <p className="pixel-text text-xs text-foreground">{t.embeddedCompany}</p>
-              </div>
-              <div className="border-l-4 border-accent" style={{ paddingLeft: "1rem" }}>
-                <div style={{ gap: "0.5rem", display: "flex", flexDirection: "column" }}>
-                  <p className="pixel-text text-sm">{t.expEmb1}</p>
-                  <p className="pixel-text text-sm">{t.expEmb2}</p>
-                  <p className="pixel-text text-sm">{t.expEmb3}</p>
-                  <p className="pixel-text text-sm">{t.expEmb4}</p>
                 </div>
               </div>
             </div>

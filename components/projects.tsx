@@ -23,9 +23,9 @@ export default function Projects() {
    const { uiSoundEnabled } = useSoundSettings()
 
   const projects = [
-      {
+    {
       title: "Leetube",
-      description: "Full-stack video-streaming app with torrent/movie API and OAuth.",
+      description: "Dockerized full-stack TypeScript video-streaming app with torrent/movie API integration, subtitle management, and OAuth.",
       technologies: ["TypeScript", "Docker", "API Integration", "OAuth"],
       year: "2025",
       type: "demo",
@@ -34,31 +34,9 @@ export default function Projects() {
       demo: "https://youtu.be/N-ohDCg3ij0",
       tags: ["web"],
     },
-    // add this project
-    {
-      title: "Portfolio V1",
-      description: "My personal portfolio website showcasing projects and skills.",
-      technologies: ["Next.js", "React", "TypeScript", "TailwindCSS"],
-      year: "2025",
-      type: "deployed",
-      link: "https://portfolio-iota-eosin-89.vercel.app/",
-      github: "https://github.com/BEAJousama/portfolio",
-      demo: "",
-      tags: ["web"],
-    },
-    {
-      title: "Fleming.Watch",
-      description: "Product website with CMS-powered Next.js experience and responsive design.",
-      technologies: ["Next.js", "React", "Sanity CMS", "TailwindCSS"],
-      year: "2024",
-      type: "deployed",
-      link: "https://fleming.watch",
-      demo: "",
-      tags: ["web"],
-    },
     {
       title: "BeigePill.com",
-      description: "Full-stack content portfolio with media-heavy page optimization.",
+      description: "Full-stack, content-driven portfolio using Next.js, Sanity CMS and Mux: data schemas, client rendering, and deployment optimizations for fast, media-heavy pages.",
       technologies: ["Next.js", "Sanity CMS", "Mux", "TailwindCSS"],
       year: "2024",
       type: "deployed",
@@ -67,8 +45,18 @@ export default function Projects() {
       tags: ["web"],
     },
     {
+      title: "Fleming.Watch",
+      description: "Led development of Fleming Watch's product website: performant, CMS-powered Next.js experience with tailored animations and responsive design to improve product storytelling and user engagement.",
+      technologies: ["Next.js", "React", "Sanity CMS", "TailwindCSS"],
+      year: "2024",
+      type: "deployed",
+      link: "https://fleming.watch",
+      demo: "",
+      tags: ["web"],
+    },
+    {
       title: "PongMasters",
-      description: "Real-time multiplayer web app with WebSockets, chat, and Pong game.",
+      description: "Full-stack real-time multiplayer web app (Next.js frontend, NestJS backend, WebSockets) with authentication, chat, notifications, and a browser-based Pong game.",
       technologies: ["Next.js", "NestJS", "WebSockets", "PostgreSQL"],
       year: "2023",
       type: "demo",
@@ -79,38 +67,34 @@ export default function Projects() {
     },
     {
       title: "WebServ",
-      description: "Lightweight HTTP web server with socket networking and CGI support.",
-      technologies: ["C++", "Socket Programming", "HTTP Protocol"],
+      description: "Lightweight HTTP web server from scratch with socket-based networking, HTTP parsing, CGI/PHP support, and static file serving.",
+      technologies: ["C++", "Socket Programming", "HTTP", "CGI"],
       year: "2022",
       type: "demo",
       link: "",
       github: "https://github.com/BEAJousama/websrv",
-      // demo: "https://youtu.be/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c",
       tags: ["networking", "systems"],
     },
     {
-      title: "KFS - x86 Kernel",
-      description: "Custom x86 kernel with bootloader, GDT/IDT, and interrupt routines.",
+      title: "BGP at Doors of Autonomous Systems",
+      description: "Designed and deployed multi-node GNS3 topologies using FRR for routing, implemented static and dynamic multicast tests, and automated configuration/startup with shell scripts.",
+      technologies: ["GNS3", "FRR", "Multicast", "Shell Scripting"],
+      year: "2025",
+      type: "demo",
+      link: "",
+      github: "https://github.com/BEAJousama/BADASS",
+      tags: ["networking"],
+    },
+    {
+      title: "KFS",
+      description: "Minimal x86 kernel written in C and x86 assembly: custom bootloader, GDT/IDT setup, interrupt service routines, basic shell, and terminal I/O.",
       technologies: ["C", "x86 Assembly", "Kernel Development"],
       year: "2025",
       type: "demo",
       link: "",
       github: "https://github.com/BEAJousama/kfs_2",
-      // demo: "https://stream.mux.com/NHt6gKs2KY1Vf4xcosyFX7TGd7nb6IEW00dZ5jn1Sg2c/high.mp4",
       tags: ["systems", "low-level"],
     },
-    // add bgp project
-    {
-      title: "BGP AT DOORS OF AUTONOMUS SYSTEMS",
-      description: "Built and automated GNS3 network labs with FRR-based routers and scripted hosts to design, deploy, and validate multicast routing scenarios.",
-      technologies: ["GNS3", "Networking Protocols", "Shell Scripting"],
-      year: "2025",
-      type: "demo",
-      link: "",
-      github: "https://github.com/BEAJousama/BADASS",
-      // demo: "",
-      tags: ["networking"],
-    }
   ]
 
   // Simplified tags: "web" covers fullstack web work

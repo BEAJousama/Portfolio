@@ -7,10 +7,10 @@ export const translations = {
     projects: "Projects",
     contact: "Contact",
     
-    // Hero
+    // Hero (aligned with CV summary)
     heroTitle: "Hi there",
-    heroDesc1: "I'm a Fullstack Software Engineer building fast, scalable web applications with Next.js, React, Node.js, and modern web technologies.",
-    heroDesc2: "I love solving real problems, writing clean code, and collaborating in fast-moving startup environments.",
+    heroDesc1: "Fullstack Engineer with practical experience building and maintaining web applications using Next.js, React, Node.js, and Sanity CMS. I've worked on high-visibility client projects, delivering fast and SEO-friendly websites.",
+    heroDesc2: "I learn fast, enjoy solving real problems, and I'm comfortable handling features from start to finish, especially in fast-moving startup environments.",
     viewProjects: "[ View Projects ]",
     getInTouch: "[ Get in Touch ]",
     downloadCV: "[ Download CV ]",
@@ -30,31 +30,25 @@ export const translations = {
     education: "Education",
     fullstackEngineer: "Fullstack Engineer",
     experienceCompany: "FutureCorp • Paris | Nov 2023 - Mar 2025",
-    exp1: "▸ Developed fast, SEO-optimized websites with Next.js & Sanity CMS",
-    exp2: "▸ Managed high-profile clients: Saatchi & Saatchi, The Brooklyn Tower",
-    exp3: "▸ Achieved 99.9% uptime, reduced issues by 25%",
-    exp4: "▸ Collaborated on responsive UI & content workflows",
-    embeddedEngineer: "Embedded Linux Engineering Intern",
-    embeddedCompany: "Occitaline • Toulouse, France | Apr 2019 - Aug 2019",
-    expEmb1: "▸ Designed LoRaWAN IoT gateways for smart buildings, monitoring 100+ sensors in real-time",
-    expEmb2: "▸ Built embedded Linux solutions with MQTT protocols for secure device connectivity",
-    expEmb3: "▸ Reduced deployment time by 20% through hardware integration troubleshooting",
-    expEmb4: "▸ Created technical documentation for gateway deployment and maintenance",
+    exp1: "▸ Developed, deployed, and maintained web applications using Next.js, Sanity CMS, and modern front-end technologies to deliver fast, scalable, and SEO-optimized websites",
+    exp2: "▸ Managed maintenance and feature updates for high-profile clients such as Saatchi & Saatchi and The Brooklyn Tower, achieving 99.9% uptime and reducing post-deployment issues by 25%",
+    exp3: "▸ Collaborated with designers and project managers to implement responsive UI components, streamline content workflows, and improve overall system reliability",
     edu1337: "UM6P - 1337 Coding School (42 Network)",
     edu1337Date: "Nov 2021 - Present",
-    edu1337Degree: "Software Engineering, Level 19.16",
+    edu1337Degree: "Software Engineering, Level 19.53",
     edu1337Desc: "Advanced curriculum student with completed Common Core in C/C++, algorithms, Unix systems and software engineering fundamentals",
     eduEnsa: "National School of Applied Sciences (ENSA Kenitra)",
     eduEnsaDate: "Sep 2014 - Aug 2018",
     eduEnsaDegree: "Engineering School",
     eduEnsaDesc: "Studied networking and telecommunication, completed technical internships in industry",
-    languages: "Languages: English (Professional), French (Fluent), Arabic (Native)",
+    languages: "Languages: English (Professional), French (Fluent), Arabic (Native).",
     
     // Skills
     frontend: "Frontend",
     backend: "Backend",
-    languagesSkills: "Languages",
-    devops: "DevOps",
+    databases: "Databases",
+    languagesSkills: "Programming",
+    devops: "DevOps & Cloud",
     
     // Projects
     projectsTitle: "Projects",
@@ -111,10 +105,10 @@ export const translations = {
     projects: "Projets",
     contact: "Contact",
     
-    // Hero
+    // Hero (aligned with CV summary)
     heroTitle: "Bonjour",
-    heroDesc1: "Je suis ingénieur Fullstack créant des applications web rapides et évolutives avec Next.js, React, Node.js et les technologies web modernes.",
-    heroDesc2: "J'adore résoudre de vrais problèmes, écrire du code propre et collaborer dans des environnements de startup dynamiques.",
+    heroDesc1: "Ingénieur Fullstack avec une expérience pratique en développement et maintenance d'applications web avec Next.js, React, Node.js et Sanity CMS. J'ai travaillé sur des projets clients à forte visibilité, livrant des sites rapides et optimisés SEO.",
+    heroDesc2: "J'apprends vite, j'aime résoudre des problèmes concrets et gérer des fonctionnalités de A à Z, notamment en environnement startup.",
     viewProjects: "[ Voir Projets ]",
     getInTouch: "[ Me Contacter ]",
     downloadCV: "[ Télécharger CV ]",
@@ -134,31 +128,25 @@ export const translations = {
     education: "Formation",
     fullstackEngineer: "Ingénieur Fullstack",
     experienceCompany: "FutureCorp • Paris | Nov 2023 - Mar 2025",
-    exp1: "▸ Développement de sites web rapides et optimisés SEO avec Next.js & Sanity CMS",
-    exp2: "▸ Gestion de clients prestigieux : Saatchi & Saatchi, The Brooklyn Tower",
-    exp3: "▸ Atteint 99,9% de disponibilité, réduction des problèmes de 25%",
-    exp4: "▸ Collaboration sur l'UI responsive et les workflows de contenu",
-    embeddedEngineer: "Stagiaire Ingénieur Linux Embarqué",
-    embeddedCompany: "Occitaline • Toulouse, France | Avr 2019 - Aoû 2019",
-    expEmb1: "▸ Conception de passerelles IoT LoRaWAN pour bâtiments intelligents, surveillance de 100+ capteurs en temps réel",
-    expEmb2: "▸ Développement de solutions Linux embarquées avec protocoles MQTT pour connectivité sécurisée",
-    expEmb3: "▸ Réduction de 20% du temps de déploiement via débogage d'intégration matérielle",
-    expEmb4: "▸ Création de documentation technique pour déploiement et maintenance des passerelles",
+    exp1: "▸ Développement, déploiement et maintenance d'applications web avec Next.js, Sanity CMS et technologies front-end modernes pour livrer des sites rapides, évolutifs et optimisés SEO",
+    exp2: "▸ Maintenance et évolutions pour des clients prestigieux (Saatchi & Saatchi, The Brooklyn Tower) : 99,9% de disponibilité et réduction des incidents post-déploiement de 25%",
+    exp3: "▸ Collaboration avec designers et chefs de projet pour composants UI responsive, workflows de contenu et fiabilité du système",
     edu1337: "UM6P - 1337 Coding School (réseau 42)",
     edu1337Date: "Nov 2021 - Présent",
-    edu1337Degree: "Génie Logiciel, Niveau 19.16",
+    edu1337Degree: "Génie Logiciel, Niveau 19.53",
     edu1337Desc: "Étudiant avancé avec Common Core complété en C/C++, algorithmes, systèmes Unix et fondamentaux du génie logiciel",
     eduEnsa: "École Nationale des Sciences Appliquées (ENSA Kénitra)",
     eduEnsaDate: "Sep 2014 - Aoû 2018",
     eduEnsaDegree: "École d'Ingénieurs",
     eduEnsaDesc: "Études en réseaux et télécommunications, stages techniques complétés en industrie",
-    languages: "Langues : Anglais (Professionnel), Français (Courant), Arabe (Natif)",
+    languages: "Langues : Anglais (Professionnel), Français (Courant), Arabe (Natif).",
     
     // Skills
     frontend: "Frontend",
     backend: "Backend",
-    languagesSkills: "Langages",
-    devops: "DevOps",
+    databases: "Bases de données",
+    languagesSkills: "Programmation",
+    devops: "DevOps & Cloud",
     
     // Projects
     projectsTitle: "Projets",
@@ -186,7 +174,7 @@ export const translations = {
     emailme: "Email",
     
     // Role
-    role: "Ingénieur Fullstack",
+    role: "Ingénieur Frontend",
 
     // Blog (page UI only)
     blogTitle: "OB.log",

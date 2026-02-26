@@ -11,9 +11,9 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono"
 const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 
 export const metadata: Metadata = {
-  title: "Beaj Ousama – Fullstack Software Engineer",
+  title: "Beaj Ousama – Frontend Engineer",
   description:
-    "Fullstack Software Engineer with expertise in Next.js, React, Node.js, and modern web technologies. Building fast, scalable, and SEO-friendly applications.",
+    "Frontend Engineer with practical experience in Next.js, React, Node.js, and Sanity CMS. Building fast, SEO-friendly web applications. Khouribga, Morocco.",
   generator: "v0.app",
   icons: {
     icon: [

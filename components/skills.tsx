@@ -5,7 +5,6 @@ import { useState, useEffect } from "react"
 
 interface Skill {
   name: string
-  level: number
   color: string
   iconUrl: string
 }
@@ -19,19 +18,20 @@ const getSkillIconUrl = (skill: string): string => {
     "TailwindCSS": "https://icon.icepanel.io/Technology/svg/Tailwind-CSS.svg",
     "HTML": "https://icon.icepanel.io/Technology/svg/HTML5.svg",
     "Node.js": "https://icon.icepanel.io/Technology/svg/Node.js.svg",
+    "Express.js": "https://icon.icepanel.io/Technology/svg/Express.svg",
     "NestJS": "https://icon.icepanel.io/Technology/svg/Nest.js.svg",
     "PostgreSQL": "https://icon.icepanel.io/Technology/svg/PostgresSQL.svg",
-    "MongoDB": "https://icon.icepanel.io/Technology/svg/MongoDB.svg",
+    "MySQL": "https://icon.icepanel.io/Technology/svg/MySQL.svg",
     "Redis": "https://icon.icepanel.io/Technology/svg/Redis.svg",
-    "GraphQL": "https://icon.icepanel.io/Technology/svg/GraphQL.svg",
     "JavaScript": "https://icon.icepanel.io/Technology/svg/JavaScript.svg",
     "C": "https://icon.icepanel.io/Technology/svg/C.svg",
     "C++": "https://icon.icepanel.io/Technology/svg/C%2B%2B-%28CPlusPlus%29.svg",
     "Docker": "https://icon.icepanel.io/Technology/svg/Docker.svg",
     "Kubernetes": "https://icon.icepanel.io/Technology/svg/Kubernetes.svg",
+    "Nginx": "https://icon.icepanel.io/Technology/svg/Nginx.svg",
+    "Ansible": "https://icon.icepanel.io/Technology/svg/Ansible.svg",
     "Git": "https://icon.icepanel.io/Technology/svg/Git.svg",
     "Azure": "https://icon.icepanel.io/Technology/svg/Azure.svg",
-    "AWS": "https://icon.icepanel.io/Technology/svg/AWS.svg",
     "Figma": "https://icon.icepanel.io/Technology/svg/Figma.svg",
   }
   return iconMap[skill] || "https://icon.icepanel.io/Technology/svg/React.svg"
@@ -50,7 +50,7 @@ export default function Skills() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  // On mobile, show all progress bars by default
+  // On mobile, show all bars expanded by default
   const isActive = (skillName: string) => {
     if (isMobile) return true // Always show on mobile
     return hoveredSkill === skillName || clickedSkill === skillName
@@ -69,43 +69,46 @@ export default function Skills() {
     {
       category: t.frontend,
       skills: [
-        { name: "React", level: 95, color: "#61DAFB", iconUrl: getSkillIconUrl("React") },
-        { name: "Next.js", level: 90, color: "#000000", iconUrl: getSkillIconUrl("Next.js") },
-        { name: "CSS", level: 92, color: "#264DE4", iconUrl: getSkillIconUrl("CSS") },
-        { name: "TailwindCSS", level: 90, color: "#06B6D4", iconUrl: getSkillIconUrl("TailwindCSS") },
-        { name: "HTML", level: 95, color: "#E34F26", iconUrl: getSkillIconUrl("HTML") },
-        { name: "Figma", level: 80, color: "#F24E1E", iconUrl: getSkillIconUrl("Figma") },
-
+        { name: "React", color: "#61DAFB", iconUrl: getSkillIconUrl("React") },
+        { name: "Next.js", color: "#000000", iconUrl: getSkillIconUrl("Next.js") },
+        { name: "CSS", color: "#264DE4", iconUrl: getSkillIconUrl("CSS") },
+        { name: "TailwindCSS", color: "#06B6D4", iconUrl: getSkillIconUrl("TailwindCSS") },
       ],
     },
     {
       category: t.backend,
       skills: [
-        { name: "Node.js", level: 88, color: "#339933", iconUrl: getSkillIconUrl("Node.js") },
-        { name: "NestJS", level: 80, color: "#E0234E", iconUrl: getSkillIconUrl("NestJS") },
-        { name: "PostgreSQL", level: 82, color: "#336791", iconUrl: getSkillIconUrl("PostgreSQL") },
-        { name: "MongoDB", level: 78, color: "#47A248", iconUrl: getSkillIconUrl("MongoDB") },
-        { name: "Redis", level: 75, color: "#DC382D", iconUrl: getSkillIconUrl("Redis") },
-        { name: "GraphQL", level: 72, color: "#E10098", iconUrl: getSkillIconUrl("GraphQL") },
+        { name: "Node.js", color: "#339933", iconUrl: getSkillIconUrl("Node.js") },
+        { name: "Express.js", color: "#000000", iconUrl: getSkillIconUrl("Express.js") },
+        { name: "NestJS", color: "#E0234E", iconUrl: getSkillIconUrl("NestJS") },
+      ],
+    },
+    {
+      category: t.databases,
+      skills: [
+        { name: "PostgreSQL", color: "#336791", iconUrl: getSkillIconUrl("PostgreSQL") },
+        { name: "MySQL", color: "#4479A1", iconUrl: getSkillIconUrl("MySQL") },
+        { name: "Redis", color: "#DC382D", iconUrl: getSkillIconUrl("Redis") },
       ],
     },
     {
       category: t.languagesSkills,
       skills: [
-        { name: "JavaScript", level: 92, color: "#F7DF1E", iconUrl: getSkillIconUrl("JavaScript") },
-        { name: "TypeScript", level: 88, color: "#3178C6", iconUrl: getSkillIconUrl("TypeScript") },
-        { name: "C", level: 75, color: "#A8B9CC", iconUrl: getSkillIconUrl("C") },
-        { name: "C++", level: 70, color: "#00599C", iconUrl: getSkillIconUrl("C++") },
+        { name: "JavaScript", color: "#F7DF1E", iconUrl: getSkillIconUrl("JavaScript") },
+        { name: "TypeScript", color: "#3178C6", iconUrl: getSkillIconUrl("TypeScript") },
+        { name: "C", color: "#A8B9CC", iconUrl: getSkillIconUrl("C") },
+        { name: "C++", color: "#00599C", iconUrl: getSkillIconUrl("C++") },
       ],
     },
     {
       category: t.devops,
       skills: [
-        { name: "Docker", level: 85, color: "#2496ED", iconUrl: getSkillIconUrl("Docker") },
-        { name: "Kubernetes", level: 75, color: "#326CE5", iconUrl: getSkillIconUrl("Kubernetes") },
-        { name: "Git", level: 90, color: "#F05032", iconUrl: getSkillIconUrl("Git") },
-        { name: "Azure", level: 72, color: "#0078D4", iconUrl: getSkillIconUrl("Azure") },
-        { name: "AWS", level: 70, color: "#FF9900", iconUrl: getSkillIconUrl("AWS") },
+        { name: "Git", color: "#F05032", iconUrl: getSkillIconUrl("Git") },
+        { name: "Docker", color: "#2496ED", iconUrl: getSkillIconUrl("Docker") },
+        { name: "Kubernetes", color: "#326CE5", iconUrl: getSkillIconUrl("Kubernetes") },
+        { name: "Nginx", color: "#009639", iconUrl: getSkillIconUrl("Nginx") },
+        { name: "Ansible", color: "#EE0000", iconUrl: getSkillIconUrl("Ansible") },
+        { name: "Azure", color: "#0078D4", iconUrl: getSkillIconUrl("Azure") },
       ],
     },
   ]
@@ -195,16 +198,9 @@ export default function Skills() {
                         <span className="pixel-text" style={{ fontSize: "0.7rem", fontWeight: "bold" }}>
                           {skill.name}
                         </span>
-                        
-                        {/* Percentage when active */}
-                        {isActive(skill.name) && (
-                          <span className="pixel-text" style={{ fontSize: "0.6rem", opacity: 0.8, marginLeft: "auto" }}>
-                            {skill.level}%
-                          </span>
-                        )}
                       </div>
                       
-                      {/* Progress bar - always visible on mobile */}
+                      {/* Animated bar (fills on hover/active — no percentage, just highlight) */}
                       <div 
                         style={{
                           height: "6px",
@@ -218,7 +214,7 @@ export default function Skills() {
                         <div
                           style={{
                             height: "100%",
-                            width: isActive(skill.name) ? `${skill.level}%` : "0%",
+                            width: isActive(skill.name) ? "100%" : "0%",
                             background: isActive(skill.name) ? "white" : skill.color,
                             transition: "width 0.5s ease",
                             boxShadow: isActive(skill.name) 
@@ -246,10 +242,10 @@ export default function Skills() {
           }}
         >
           {isMobile
-            ? "> Tap skills to see details"
+            ? "> Tap a skill to highlight"
             : hoveredSkill || clickedSkill
-              ? `> ${hoveredSkill || clickedSkill} selected - View projects to see it in action!`
-              : "> Hover over skills to see details"
+              ? "> Check out Projects to see these in action"
+              : "> Hover over a skill to highlight"
           }
         </p>
       </div>
