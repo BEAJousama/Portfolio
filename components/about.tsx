@@ -30,6 +30,7 @@ export default function About() {
                   <p className="pixel-text text-sm">{t.exp1}</p>
                   <p className="pixel-text text-sm">{t.exp2}</p>
                   <p className="pixel-text text-sm">{t.exp3}</p>
+                  <p className="pixel-text text-sm">{t.exp4}</p>
                 </div>
               </div>
             </div>
