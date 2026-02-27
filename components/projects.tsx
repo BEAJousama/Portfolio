@@ -95,10 +95,30 @@ export default function Projects() {
       github: "https://github.com/BEAJousama/kfs_2",
       tags: ["systems", "low-level"],
     },
+    {
+      title: "Tokenizer",
+      description: "Custom ERC20 token (B42) and multisig wallet (BM42) on Ethereum Sepolia — Solidity, OpenZeppelin, deployed and verified.",
+      technologies: ["Solidity", "OpenZeppelin", "Ethereum", "Sepolia", "Remix"],
+      year: "2025",
+      type: "demo",
+      link: "",
+      github: "https://github.com/BEAJousama/Tokenizer",
+      tags: ["web3"],
+    },
+    {
+      title: "TokenizeArt",
+      description: "ERC-721 NFT collection on Ethereum Sepolia. Solidity, OpenZeppelin, IPFS (Pinata), Remix, MetaMask; on-chain SVG option and minting web app.",
+      technologies: ["Solidity", "OpenZeppelin", "IPFS", "Remix", "MetaMask", "Web3.js"],
+      year: "2025",
+      type: "demo",
+      link: "",
+      github: "https://github.com/Beajousama/TokenizeArt",
+      tags: ["web3"],
+    },
   ]
 
   // Simplified tags: "web" covers fullstack web work
-  const tags = ["all", "web", "networking", "systems", "low-level"]
+  const tags = ["all", "web", "web3", "networking", "systems", "low-level"]
 
   const filteredProjects = selectedTag === "all" 
     ? projects 
