@@ -176,7 +176,7 @@ export const translations = {
     emailme: "Email",
     
     // Role
-    role: "Ingénieur Frontend",
+    role: "Ingénieur Fullstack",
 
     // Blog (page UI only)
     blogTitle: "OB.log",
