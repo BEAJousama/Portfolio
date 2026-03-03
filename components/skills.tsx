@@ -28,7 +28,7 @@ const getSkillIconUrl = (skill: string): string => {
     "C++": "https://icon.icepanel.io/Technology/svg/C%2B%2B-%28CPlusPlus%29.svg",
     "Docker": "https://icon.icepanel.io/Technology/svg/Docker.svg",
     "Kubernetes": "https://icon.icepanel.io/Technology/svg/Kubernetes.svg",
-    "Nginx": "https://icon.icepanel.io/Technology/svg/Nginx.svg",
+    "Nginx": "https://icon.icepanel.io/Technology/svg/NGINX.svg",
     "Ansible": "https://icon.icepanel.io/Technology/svg/Ansible.svg",
     "Git": "https://icon.icepanel.io/Technology/svg/Git.svg",
     "Azure": "https://icon.icepanel.io/Technology/svg/Azure.svg",

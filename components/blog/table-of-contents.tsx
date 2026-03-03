@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { Twitter, Linkedin, Link2 } from "lucide-react"
 import type { TocHeading } from "@/lib/blog/toc"
 
 type Props = {
@@ -10,6 +11,8 @@ type Props = {
 export default function TableOfContents({ headings }: Props) {
   const [activeId, setActiveId] = useState(headings[0]?.id ?? "")
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [shareUrl, setShareUrl] = useState("")
+  const [copied, setCopied] = useState(false)
 
   // Refs for direct DOM animation — bypass React state/re-render entirely
   const stripRef = useRef<HTMLDivElement>(null)
@@ -36,6 +39,66 @@ export default function TableOfContents({ headings }: Props) {
     })
     return () => observer.disconnect()
   }, [headings])
+
+  // Resolve canonical share URL on client
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const href = window.location.href
+    // Strip hash so shares point to top of article
+    const clean = href.split("#")[0]
+    setShareUrl(clean)
+  }, [])
+
+  const handleShare = useCallback(
+    (platform: "x" | "linkedin") => {
+      if (typeof window === "undefined") return
+      const url = encodeURIComponent(shareUrl || window.location.href)
+      const text = encodeURIComponent(document.title || "OB.log article")
+
+      let shareLink = ""
+      if (platform === "x") {
+        shareLink = `https://x.com/intent/tweet?url=${url}&text=${text}`
+      } else {
+        shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+      }
+
+      window.open(shareLink, "_blank", "noopener,noreferrer")
+    },
+    [shareUrl],
+  )
+
+  const handleCopyLink = useCallback(() => {
+    if (typeof window === "undefined") return
+    const url = shareUrl || window.location.href
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(
+        () => setCopied(true),
+        () => setCopied(true),
+      )
+    } else {
+      // Fallback
+      const textarea = document.createElement("textarea")
+      textarea.value = url
+      textarea.style.position = "fixed"
+      textarea.style.opacity = "0"
+      document.body.appendChild(textarea)
+      textarea.focus()
+      textarea.select()
+      try {
+        document.execCommand("copy")
+      } catch {
+        // ignore
+      }
+      document.body.removeChild(textarea)
+      setCopied(true)
+    }
+  }, [shareUrl])
+
+  useEffect(() => {
+    if (!copied) return
+    const id = setTimeout(() => setCopied(false), 2000)
+    return () => clearTimeout(id)
+  }, [copied])
 
   // Scroll-driven animations — direct DOM updates inside rAF, zero React overhead
   useEffect(() => {
@@ -163,6 +226,37 @@ export default function TableOfContents({ headings }: Props) {
             {headings.filter((h) => h.level === 2).length}&nbsp;sections
           </p>
         </div>
+
+        {/* Share card (desktop sidebar, separate from INDEX) */}
+        <div className="mt-3 pixel-border bg-card p-3">
+          <p className="pixel-text mb-2 text-[0.58rem] text-muted-foreground">Share</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => handleShare("x")}
+              aria-label="Share on X"
+              className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
+            >
+              <Twitter size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleShare("linkedin")}
+              aria-label="Share on LinkedIn"
+              className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
+            >
+              <Linkedin size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              aria-label={copied ? "Link copied" : "Copy link"}
+              className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
+            >
+              <Link2 size={14} />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/*
@@ -214,6 +308,41 @@ export default function TableOfContents({ headings }: Props) {
             <nav aria-label="Article sections">{navList}</nav>
           </div>
         )}
+      </div>
+
+      {/* Share card (mobile / tablet, under the sticky INDEX strip) */}
+      <div className="min-[1440px]:hidden px-4 pt-3">
+        <div className="pixel-border bg-card px-3 py-2">
+          <div className="mb-1 flex items-center justify-between gap-2">
+            <span className="game-title text-[0.55rem] tracking-widest text-accent">[ SHARE ]</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => handleShare("x")}
+              aria-label="Share on X"
+              className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
+            >
+              <Twitter size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={() => handleShare("linkedin")}
+              aria-label="Share on LinkedIn"
+              className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
+            >
+              <Linkedin size={14} />
+            </button>
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              aria-label={copied ? "Link copied" : "Copy link"}
+              className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
+            >
+              <Link2 size={14} />
+            </button>
+          </div>
+        </div>
       </div>
     </>
   )

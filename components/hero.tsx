@@ -4,13 +4,13 @@ import { useState, useEffect } from "react"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { useSound } from "@/hooks/use-sound"
 import { useSoundSettings } from "@/contexts/SoundContext"
-import SnakeGame from "@/components/snake-game"
+// import SnakeGame from "@/components/snake-game"
 
 export default function Hero() {
   const { t, language } = useLanguage()
   const { playClick } = useSound()
   const { uiSoundEnabled } = useSoundSettings()
-  const [isGameOpen, setIsGameOpen] = useState(false)
+  // const [isGameOpen, setIsGameOpen] = useState(false)
   const [typedTitle, setTypedTitle] = useState("")
   const [showContent, setShowContent] = useState(false)
 
@@ -96,21 +96,7 @@ export default function Hero() {
 
         {/* CTA Buttons with smooth hover effects */}
         <div className="flex flex-col md:flex-row justify-center items-center fade-in" style={{ gap: "clamp(0.75rem, 1.5vw, 1rem)", opacity: 0, animationDelay: "1.1s" }}>
-          <button
-            onClick={() => {
-              if (uiSoundEnabled) {
-                playClick()
-              }
-              setIsGameOpen(true)
-            }}
-            className="retro-button font-bold"
-            style={{ 
-              padding: "clamp(0.5rem, 1vh, 0.75rem) clamp(1rem, 2vw, 1.5rem)", 
-              fontSize: "clamp(0.75rem, 1.5vw, 1rem)",
-            }}
-          >
-            {t.playGame}
-          </button>
+          {/* Play Snake Game button removed */}
           <button
             onClick={() => {
               if (uiSoundEnabled) {
@@ -176,8 +162,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Snake Game Modal */}
-      <SnakeGame isOpen={isGameOpen} onClose={() => setIsGameOpen(false)} />
+      {/* Snake Game Modal removed */}
+      {/* <SnakeGame isOpen={isGameOpen} onClose={() => setIsGameOpen(false)} /> */}
     </section>
   )
 }

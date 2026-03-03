@@ -60,15 +60,20 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
   const [lastCollectedSkill, setLastCollectedSkill] = useState<string | null>(null)
   const [showCollectedPopup, setShowCollectedPopup] = useState(false)
   const popupTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const hasTurnedThisTickRef = useRef(false)
 
   const handleDirectionChange = useCallback((newDirection: Direction) => {
     if (!isPlaying) return
+    // Only allow one turn per tick to avoid double-press combos
+    if (hasTurnedThisTickRef.current) return
     
-    // Prevent reversing direction
+    // Prevent reversing direction (cannot go directly back into yourself)
     if (newDirection.x !== 0 && direction.x === 0) {
       setDirection(newDirection)
+      hasTurnedThisTickRef.current = true
     } else if (newDirection.y !== 0 && direction.y === 0) {
       setDirection(newDirection)
+      hasTurnedThisTickRef.current = true
     }
   }, [direction, isPlaying])
 
@@ -96,6 +101,7 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
     setSpeed(150)
     setLastCollectedSkill(null)
     setShowCollectedPopup(false)
+    hasTurnedThisTickRef.current = false
   }, [getRandomPosition])
 
   const moveSnake = useCallback(() => {
@@ -107,8 +113,11 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
         y: (prevSnake[0].y + direction.y + GRID_SIZE) % GRID_SIZE
       }
 
-      // Check collision with self
-      if (prevSnake.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
+      // Check collision with self.
+      // We ignore the last 1–2 tail segments since they are about to move away
+      // and can be safely stepped into when turning quickly.
+      const bodyToCheck = prevSnake.slice(0, Math.max(prevSnake.length - 2, 0))
+      if (bodyToCheck.some(segment => segment.x === newHead.x && segment.y === newHead.y)) {
         if (uiSoundEnabled) {
           playGameOver()
         }
@@ -161,6 +170,8 @@ export default function SnakeGame({ isOpen, onClose }: { isOpen: boolean; onClos
       newSnake.pop()
       return newSnake
     })
+    // Movement for this tick is done; next tick can accept a new turn
+    hasTurnedThisTickRef.current = false
   }, [direction, food, gameOver, gameWon, isPlaying, collectedSkills, getRandomPosition])
 
   useEffect(() => {
