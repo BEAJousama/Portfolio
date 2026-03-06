@@ -8,7 +8,6 @@ import ParticlesBackground from "@/components/particles-background"
 import CustomCursor from "@/components/custom-cursor"
 import BlogHeader from "@/components/blog/blog-header"
 import BackgroundMusic from "@/components/background-music"
-
 type BlogShellProps = {
   children: ReactNode
 }

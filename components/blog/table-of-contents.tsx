@@ -1,18 +1,43 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { Twitter, Linkedin, Link2 } from "lucide-react"
+import { Linkedin, Link2, Check } from "lucide-react"
+import { FaXTwitter } from "react-icons/fa6"
 import type { TocHeading } from "@/lib/blog/toc"
 
 type Props = {
   headings: TocHeading[]
 }
 
+function Toast({ show, message }: { show: boolean; message: string }) {
+  if (!show) return null
+  return (
+    <div
+      className="fixed z-100 pixel-border bg-card px-4 py-2 flex items-center gap-2"
+      style={{ 
+        top: "6rem",
+        left: "50%",
+        transform: "translateX(-50%)",
+        animation: "toastFadeIn 0.3s ease-out forwards",
+      }}
+    >
+      <Check size={16} className="text-green-500" />
+      <span className="pixel-text text-xs">{message}</span>
+      <style jsx>{`
+        @keyframes toastFadeIn {
+          from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+          to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+      `}</style>
+    </div>
+  )
+}
+
 export default function TableOfContents({ headings }: Props) {
   const [activeId, setActiveId] = useState(headings[0]?.id ?? "")
   const [mobileOpen, setMobileOpen] = useState(false)
   const [shareUrl, setShareUrl] = useState("")
-  const [copied, setCopied] = useState(false)
+  const [toastVisible, setToastVisible] = useState(false)
 
   // Refs for direct DOM animation — bypass React state/re-render entirely
   const stripRef = useRef<HTMLDivElement>(null)
@@ -72,8 +97,14 @@ export default function TableOfContents({ headings }: Props) {
     const url = shareUrl || window.location.href
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(url).then(
-        () => setCopied(true),
-        () => setCopied(true),
+        () => {
+          setToastVisible(true)
+          setTimeout(() => setToastVisible(false), 2000)
+        },
+        () => {
+          setToastVisible(true)
+          setTimeout(() => setToastVisible(false), 2000)
+        },
       )
     } else {
       // Fallback
@@ -90,15 +121,10 @@ export default function TableOfContents({ headings }: Props) {
         // ignore
       }
       document.body.removeChild(textarea)
-      setCopied(true)
+      setToastVisible(true)
+      setTimeout(() => setToastVisible(false), 2000)
     }
   }, [shareUrl])
-
-  useEffect(() => {
-    if (!copied) return
-    const id = setTimeout(() => setCopied(false), 2000)
-    return () => clearTimeout(id)
-  }, [copied])
 
   // Scroll-driven animations — direct DOM updates inside rAF, zero React overhead
   useEffect(() => {
@@ -188,6 +214,7 @@ export default function TableOfContents({ headings }: Props) {
 
   return (
     <>
+      <Toast show={toastVisible} message="copied!" />
       {/*
         ══ DESKTOP FIXED SIDEBAR — left of article, min-[1440px]+ ══
         Article is max-w-5xl (1024px = 512px half-width), centred.
@@ -237,7 +264,7 @@ export default function TableOfContents({ headings }: Props) {
               aria-label="Share on X"
               className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
             >
-              <Twitter size={14} />
+              <FaXTwitter size={14} />
             </button>
             <button
               type="button"
@@ -250,7 +277,7 @@ export default function TableOfContents({ headings }: Props) {
             <button
               type="button"
               onClick={handleCopyLink}
-              aria-label={copied ? "Link copied" : "Copy link"}
+              aria-label="Copy link"
               className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
             >
               <Link2 size={14} />
@@ -323,7 +350,7 @@ export default function TableOfContents({ headings }: Props) {
               aria-label="Share on X"
               className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
             >
-              <Twitter size={14} />
+              <FaXTwitter size={14} />
             </button>
             <button
               type="button"
@@ -336,7 +363,7 @@ export default function TableOfContents({ headings }: Props) {
             <button
               type="button"
               onClick={handleCopyLink}
-              aria-label={copied ? "Link copied" : "Copy link"}
+              aria-label="Copy link"
               className="pixel-border bg-background px-1.5 py-1.5 hover:bg-muted flex items-center justify-center"
             >
               <Link2 size={14} />
